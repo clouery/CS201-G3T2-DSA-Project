@@ -1,25 +1,113 @@
-# Time-Dependent Public Transit TSP — Planning Notes
+# Time-Dependent Transit TSP — Locked Project Plan
 
-> Context: CS201 project, *"Beyond the Classic TSP: Redesigning Algorithms for Real-World Assumptions"*.
-> Proposed direction: a bus/train system over cleaned GeoNames Malaysian cities, with schedules, where edge costs depend on time.
-
-## Contents
-
-1. [The core clarification: waiting vs travelling vs arrival](#1-the-core-clarification-waiting-vs-travelling-vs-arrival)
-2. [What this means for the comparison](#2-what-this-means-for-the-comparison)
-3. [Assignment framing: this is a TSP redesign](#3-assignment-framing-this-is-a-tsp-redesign)
-4. [Data and network plan](#4-data-and-network-plan)
-5. [Algorithms and data structures](#5-algorithms-and-data-structures)
-6. [Pitfalls and things easy to miss](#6-pitfalls-and-things-easy-to-miss)
-7. [Suggested milestones](#7-suggested-milestones)
-8. [Bottom line](#8-bottom-line)
-9. [References](#9-references)
+> CS201 AY2026-27 Term 1 — *"Beyond the Classic TSP: Redesigning Algorithms for Real-World Assumptions"*
+>
+> **Status:** direction locked. Keep the transit TSP idea; de-risk the scope.
+> **Deadline:** Week 12, Sunday 11pm. **Peer evaluation:** Week 13.
+> **Primary data:** GeoNames `CS201_2026_project/MY.txt`.
+> **Recommended language:** Python 3.11+ (core algorithms from scratch; `pandas`/`matplotlib` only for data and plots).
+>
+> Group number placeholder: `G<X>T<X>` (confirm before packaging).
 
 ---
 
-## 1. The core clarification: waiting vs travelling vs arrival
+## Contents
 
-For any journey starting at time `t0`:
+1. [Problem definition](#1-problem-definition)
+2. [Objectives and terminology](#2-objectives-and-terminology)
+3. [Locked scope](#3-locked-scope)
+4. [Data plan](#4-data-plan)
+5. [Algorithms and data structures](#5-algorithms-and-data-structures)
+6. [Experiment design](#6-experiment-design)
+7. [Validation](#7-validation)
+8. [Deliverables and packaging](#8-deliverables-and-packaging)
+9. [Presentation plan](#9-presentation-plan)
+10. [Timeline](#10-timeline)
+11. [Team roles and peer evaluation](#11-team-roles-and-peer-evaluation)
+12. [AI policy](#12-ai-policy)
+13. [Risks and mitigations](#13-risks-and-mitigations)
+14. [Compliance checklist](#14-compliance-checklist)
+15. [References](#15-references)
+
+---
+
+## 1. Problem definition
+
+### 1.1 Use case
+
+A traveller in Malaysia wants to visit a fixed set of cities using scheduled buses and trains. They start at a given city at a given time. Services run on timetables, transfers take time, and the cost of moving between two cities depends on **when** the traveller arrives at the boarding city.
+
+This is a realistic use case in which the classic TSP assumptions do not hold.
+
+### 1.2 Classic TSP assumptions that fail
+
+| Classic TSP assumption | Transit reality |
+|---|---|
+| Pairwise costs are **static** | Travel time depends on the departure time and the specific trip |
+| Costs are **symmetric** | Services are directional; A→B ≠ B→A |
+| The graph is **complete** | Most city pairs have no direct service; transfers are required |
+| Pairwise costs are **known in advance** | The cost depends on which trip you can catch |
+| No **waiting or transfers** | Waiting and transfer buffers are part of the journey |
+| No **time constraints** | Services have first/last departures and operating hours |
+
+At least one of these is sufficient for the assignment; transit violates several. State this explicitly in the report and slides.
+
+### 1.3 Variant specification
+
+**Name:** Time-Dependent Transit TSP (TDT-TSP), open-path version.
+
+**Input**
+
+- A set of cities `V = {1, ..., n}`, each with coordinates.
+- A start city `s ∈ V` and a departure time `t0`.
+- A transit network `N = (S, R, T, ST)`:
+  - `S` — stops (one per city in v1),
+  - `R` — routes/lines,
+  - `T` — trips (concrete vehicle runs),
+  - `ST` — stop times `(trip, stop, arrival, departure)`.
+- A transfer buffer `δ` (default 5 minutes).
+- A service horizon `[t_first, t_last]` (e.g. 06:00–22:00).
+
+**Output**
+
+- A permutation `π = (s = π1, π2, ..., πn)` containing every city exactly once.
+- For each consecutive pair `(πi, πi+1)`, a feasible itinerary:
+  a sequence of trips with departure/arrival times, such that each boarding satisfies
+  `departure ≥ current_time + δ` for transfers (no buffer at the origin), and the arrival at `πi+1` is the earliest feasible.
+- The final arrival time `A` at `πn`.
+
+**Constraints**
+
+- Each city appears exactly once in `π`.
+- The itinerary between consecutive tour cities may **pass through** other cities without counting them as tour visits. A city is *visited* only when it is a tour stop.
+- Transfers must respect `δ`.
+- All times lie within the service horizon; overnight trips use `> 24:00` representation.
+- No time windows in v1 (extension only).
+
+**Objective**
+
+Minimize the final arrival time `A`.
+
+**Closed-tour extension**
+
+Add a return leg `πn → s` and minimize the return arrival. This is a small addition; choose the open-path version for v1 because a traveller does not need to return, and state the choice explicitly.
+
+### 1.4 Why the redesign is necessary
+
+A static Dijkstra on average travel times cannot represent this problem:
+
+- the cost of an edge depends on the arrival time at its tail;
+- a statically shortest path may be infeasible at the actual time (the service may not run);
+- waiting and transfers are part of the cost;
+- the graph is not complete, and direction matters.
+
+The redesign is a **time-dependent graph** (or a **time-expanded graph**) with schedule-aware edge relaxation. This is the core algorithmic contribution, not just a different weight function.
+
+---
+
+## 2. Objectives and terminology
+
+For a journey starting at `t0`:
 
 ```
 arrival = t0 + W + R
@@ -27,17 +115,13 @@ W = total waiting time
 R = total in-vehicle riding time
 ```
 
-So:
-
 | Objective | Minimizes | Ignores | Same as min arrival? |
 |---|---|---|---|
 | "Shortest waiting" | `W` | how slow the vehicle is | **No** |
 | "Shortest travelling" | `R` | how long you wait for it | **No** |
 | "Earliest arrival" | `W + R` | — | **This is the real one** |
 
-### Counterexample
-
-Standing at a stop at 08:00:
+Counterexample at a stop at 08:00:
 
 | Option | Departs | Arrives | Wait | Ride |
 |---|---:|---:|---:|---:|
@@ -45,211 +129,566 @@ Standing at a stop at 08:00:
 | Express | 08:10 | 08:40 | 10 min | 30 min |
 
 - "Take the next bus" → local → arrive **09:40**
-- "Shortest total riding time" → express → arrive **08:40**
+- "Shortest riding time" → express → arrive **08:40**
 - "Shortest final arrival" → express → **08:40**
 
-Reverse the numbers and they disagree the other way: if the local departs 08:01 and arrives 08:35, while the express departs 08:10 and arrives 08:33, then min-wait picks the local (arrives 08:35) and min-ride picks the express (arrives 08:33).
+Reverse the numbers and they disagree the other way. **Comparing both by final arrival does not make them the same algorithm**; it gives them a common yardstick.
 
-So **comparing both by final arrival time does not make them the same algorithm** — it just gives them a common yardstick. The gap between each heuristic and the true optimum is exactly what the experiments should measure.
+### How the objectives are used in this project
 
-### Two important sub-points
+- **Primary TSP objective:** minimize final arrival `A` over the whole tour.
+- **Secondary leg heuristics:** min-wait and min-ride. These are *not* the two main approaches; they are comparison modes for the experiment.
+- **Two main approaches:** different routing representations/algorithms (Section 5).
 
-1. **"Take the next train that comes earliest" is a greedy local rule, not Dijkstra.** It can board a slow local when a later express overtakes it and arrives sooner. This is the classic express/local overtaking problem.
-2. **"Shortest waiting" is ambiguous.** It can mean:
-   - (a) at each stop, board the vehicle that departs soonest — a greedy traversal; or
-   - (b) globally minimize total waiting across the journey — a time-dependent Dijkstra with wait as the edge cost.
+Special cases where objectives coincide:
 
-   These are different, and neither equals min-arrival.
+- equal ride times for all alternatives → min-wait = min-arrival;
+- equal waits for all alternatives → min-ride = min-arrival.
 
-### The correct baseline
-
-The only objective that directly minimizes final arrival is a **time-dependent Dijkstra** where the label is absolute arrival time and the edge cost is:
-
-```
-wait until the next departure >= current time + transfer buffer
-+ ride time of that specific trip
-```
-
-If you want two user-facing modes, frame them honestly as **heuristics** ("least waiting", "least riding") and compare both against the **min-arrival baseline**. That is a legitimate and interesting experiment. What you cannot claim is that either heuristic is optimal for arrival.
-
-Special cases where the objectives coincide:
-
-- If all competing services have identical ride times, min-wait = min-arrival.
-- If all waits are identical, min-ride = min-arrival.
-
-In a general timetable, they do not coincide.
+In a general timetable they do not coincide.
 
 ---
 
-## 2. What this means for the comparison
+## 3. Locked scope
 
-Three separate objectives should be implemented and reported:
+### In scope
 
-| Objective | Edge cost | Role |
-|---|---|---|
-| Min arrival | wait + ride | ground truth / optimal baseline |
-| Min wait | wait | heuristic / user mode |
-| Min ride | ride | heuristic / user mode |
+- **30 cities** for the main experiments (10/20/30/40 for scalability).
+- **One node per city** (documented abstraction).
+- **8–12 lines**, each with 4–8 stops; every selected city is on at least one line.
+- **Headways:** bus 30 min, train 60 min; service 06:00–22:00.
+- **Transfer buffer:** 5 min.
+- **Two approaches:**
+  - **A — time-expanded graph + Dijkstra**
+  - **B — time-dependent graph + CSA**
+- **Shared tour layer:** nearest-neighbour + insertion/2-opt with full re-evaluation.
+- **Classic baseline:** static TSP on a complete distance graph, same tour heuristic.
+- **Secondary leg modes:** min-wait, min-ride.
+- **Language:** Python 3.11+.
+- **Core algorithms implemented from scratch**; `pandas` for CSV and `matplotlib` for plots only.
 
-Report, for each query:
+### Out of scope (do not build)
 
-- final arrival time,
-- total waiting `W`,
-- total riding `R`,
-- number of transfers,
-- number of legs,
-- runtime and memory.
+- Real GTFS feeds or real Malaysian timetables.
+- RAPTOR / McRAPTOR.
+- Stochastic delays and reliability objectives.
+- Time windows, pickup/delivery, vehicle routing.
+- Multiple stations per city, walking footpaths.
+- A polished UI. A simple CLI and one map plot are enough.
 
-Then the headline result is the **optimality gap**: how much later do the two heuristics arrive than the optimal baseline, and on which network shapes do they fail badly. A Pareto view of arrival vs transfers is a strong addition.
+### Fallback if behind schedule
 
----
-
-## 3. Assignment framing: this is a TSP redesign
-
-The repository is currently **greenfield**:
-
-- no source code, no build system, no tests, no entry point;
-- only `README.md` (placeholder), `Project_2627T1.pdf`, and the GeoNames bundle in `CS201_2026_project/`;
-- `MY.txt` has 71,709 rows and 19 tab-separated columns, no header.
-
-The spec requires:
-
-- a **new TSP variant** (new input, output, constraints);
-- at least **two meaningfully different approaches** — different data structures or algorithms, not parameter tweaks;
-- experiments, complexity analysis, and trade-off discussion;
-- GeoNames `MY.txt` as the **primary data source**, with any augmentation documented.
-
-A pure point-to-point bus router does **not** satisfy that. The clean framing:
-
-> **Time-Dependent Public Transit TSP:** given a set of cities to visit, a start city, and a departure time, choose the visiting order and the specific scheduled connections so that every city is visited, subject to transfer feasibility, minimizing final arrival (or total waiting / total riding).
-
-The transit routing algorithm becomes the **leg-cost evaluator**; the outer problem is still TSP. This keeps the assignment's core and uses its explicitly allowed "time-dependent edge weights" direction.
-
-### Choosing the two approaches
-
-The two approaches should differ in representation or algorithm, not just weights. Recommended pair:
-
-- **Approach A:** time-expanded graph + Dijkstra/A*.
-- **Approach B:** time-dependent (schedule) graph + time-dependent Dijkstra or CSA.
-
-Min-wait vs min-ride should be a **secondary objective experiment**, not the main "two approaches" claim.
+If the time-expanded graph is not ready by the end of day 8, drop it and use **time-dependent Dijkstra vs CSA** as the two approaches. They are still meaningfully different algorithms (label-setting with a priority queue vs a single chronological connection scan). Keep the comparison honest in the report.
 
 ---
 
-## 4. Data and network plan
+## 4. Data plan
 
-GeoNames supplies **nodes, not a network**. In `MY.txt`:
+### 4.1 GeoNames facts
 
+`MY.txt`:
+
+- 71,709 rows, 19 tab-separated columns, no header;
 - 21,381 `P/PPL` populated places, but only **711 have population > 0**;
 - 99 railway stations (`S/RSTN`), 108 bus stops (`S/BUSTP`), 62 airports (`S/AIRP`);
 - **no edges, no lines, no timetables, no travel times**.
 
-### Pipeline
+GeoNames supplies **nodes, not a network**.
 
-1. **Clean**
-   - drop coordinate outliers (roughly 6 rows);
-   - deduplicate repeated name + coordinate points (roughly 25);
-   - handle blank timezones;
-   - validate latitude/longitude.
+### 4.2 Cleaning
 
-2. **Select cities**
-   - top-N by population (e.g. 50–100), or a justified population threshold;
-   - do not rely on `admin2` — about half the rows have it blank.
+1. Drop coordinate outliers (roughly 6 rows).
+2. Deduplicate repeated name + coordinate points (roughly 25).
+3. Validate latitude/longitude against a Malaysia bounding box.
+4. Handle blank timezones; Malaysia is effectively UTC+8, but `Asia/Kuala_Lumpur` and `Asia/Kuching` are both present.
+5. Keep `geonameid`, `name`, `latitude`, `longitude`, `feature class`, `feature code`, `population`, `admin1`, `timezone`.
 
-3. **Build edges**
-   - k-nearest neighbours or a distance threshold;
-   - mode by distance (bus short-haul, train long-haul);
-   - travel time = distance / speed + noise;
-   - ensure connectivity with a spanning tree plus extra edges.
+### 4.3 City selection
 
-4. **Generate schedules**
-   - per route: a headway (bus 30–60 min, train 60–180 min);
-   - first and last departure;
-   - optional peak-frequency variation;
-   - expand headways into concrete trips.
+- Use `P/PPL`, `P/PPLA`, `P/PPLC` with population > 0.
+- Select the **top 30 by population** for the main instance.
+- Keep the full ordered list so the scalability experiment can take the top 10/20/30/40.
+- If a selected city is geometrically isolated, add the nearest non-zero-population city to keep the network connected.
+- Document: records selected, columns used, filter rationale, subset justification.
 
-5. **Store GTFS-like CSVs**
-   - `stops`, `routes`, `trips`, `stop_times`, `transfers`;
-   - standard, readable, and makes the time-expanded vs time-dependent comparison natural.
+### 4.4 Network generation
 
-6. **Document every fabricated attribute**
-   - the spec explicitly requires documentation of all augmentation.
+1. **Geometric graph:** connect each city to its `k = 3` nearest neighbours (haversine distance).
+2. **Connectivity:** add the edges of a minimum spanning tree so the graph is connected.
+3. **Lines:** generate 8–12 paths of 4–8 cities using random walks or shortest paths along the geometric graph.
+4. **Coverage:** every selected city must appear on at least one line. Repair by inserting uncovered cities into the nearest line.
+5. **Modes:**
+   - bus for lines whose longest segment is < 200 km;
+   - train otherwise.
+6. **Travel time:** `distance / speed × (1 + noise)`, with bus ≈ 60 km/h, train ≈ 100 km/h, noise ≈ 5–10%.
+7. **Direction:** each line runs in both directions with the same segment times (or separate directional trips; document).
+8. **Seed:** every random choice uses a fixed seed stored in `config.json`.
 
-### Modelling choices to make explicitly
+### 4.5 Schedule generation
 
-- **One node per city** (simple, defensible) vs **city + station layers with walking edges** (more realistic, more work). For v1, use one node per city; mention the station layer as an extension.
-- **Integer minutes or seconds from a service-day origin**, allowing `> 24:00` for overnight trips. Do not modulo 24.
+- First departure 06:00, last departure 22:00.
+- Headway: bus 30 min, train 60 min.
+- Optional peak frequency (e.g. 15 min for bus 07:00–09:00 and 17:00–19:00) — only if time permits.
+- Expand each line into concrete trips: for each departure slot, create a trip with stop times at each stop.
+- Ensure no trip overlaps itself and all times are monotonically increasing.
+
+### 4.6 GTFS-like schema
+
+Emit CSVs under `data/gtfs/`:
+
+| File | Columns |
+|---|---|
+| `stops.csv` | `stop_id, name, lat, lon` |
+| `routes.csv` | `route_id, mode, name` |
+| `trips.csv` | `trip_id, route_id, direction, start_time` |
+| `stop_times.csv` | `trip_id, stop_sequence, stop_id, arrival_time, departure_time` |
+| `transfers.csv` | `from_stop, to_stop, min_transfer_time` (v1: same-stop only) |
+
+Times are integer minutes from the service-day start, allowing values `> 1440`.
+
+### 4.7 Data documentation checklist
+
+Write a dedicated report section covering:
+
+- [ ] Records selected (counts and criteria).
+- [ ] Columns used and why.
+- [ ] Filtering/preprocessing steps.
+- [ ] Subset justification (top 30 by population).
+- [ ] Every fabricated attribute: lines, modes, speeds, noise, headways, first/last departures, transfer buffer.
+- [ ] Derived attributes (distance, travel time, trip times).
+- [ ] Random seeds and generation script.
+- [ ] Known limitations (synthetic schedule, one node per city, no walking).
 
 ---
 
 ## 5. Algorithms and data structures
 
-| Algorithm | Objective | Role | Rough complexity |
-|---|---|---|---|
-| Time-dependent Dijkstra | min arrival (`W + R`) | ground-truth baseline | `O((E + C) log V)` with binary search over departures |
-| Min-wait Dijkstra | min `W` | heuristic / user mode | same |
-| Static Dijkstra on ride times | min `R` | heuristic / user mode | `O(E log V)` |
-| Time-expanded graph + Dijkstra | min arrival | second representation | `O((V' + E') log V')` |
-| Connection Scan Algorithm (CSA) | min arrival | fast alternative, strong "interestingness" | sort `O(C log C)`, query `O(C)` |
-| A* | min arrival | speedup | Dijkstra with a geographic lower bound |
-| RAPTOR | arrival + transfers | only if transfers are first-class; likely overkill | `O(K(Σ|r| + |T| + |F|))` |
+### 5.1 Core data structures
 
-### Data structures worth highlighting
+- Adjacency list for the geometric graph.
+- **Sorted departure arrays per directed edge**, with binary search for the next departure `≥ t`.
+- Min-heap / priority queue for Dijkstra.
+- Hash map city name → id.
+- Connection array sorted by departure time for CSA.
+- Time-expanded DAG for Approach A.
+- Memoisation table for leg results keyed by `(from, to, departure_time)` during tour construction.
 
-- adjacency lists;
-- binary heap / priority queue;
-- **sorted departure arrays + binary search for the next catchable trip**;
-- hash map city → id;
-- time-expanded DAG.
+### 5.2 Classic baseline (not one of the two approaches)
 
-The binary-search-on-departures detail is what makes the time-dependent Dijkstra efficient and is worth explaining in the report.
+- Complete graph on the selected cities with haversine distance as the cost.
+- Nearest-neighbour + 2-opt to produce a tour.
+- Evaluate the tour on the real transit network by routing each leg with the earliest-arrival router.
+- Report final arrival, total distance, and infeasible legs. This demonstrates why the static formulation is inadequate.
 
-### Why CSA is worth considering
+### 5.3 Approach A — time-expanded graph + Dijkstra
 
-CSA is conceptually simple: sort all connections by departure time, scan once, and keep one earliest-arrival label per stop. It is very fast and gives a clean comparison against time-dependent Dijkstra. Dibbelt et al. report roughly an order-of-magnitude speedup over time-dependent Dijkstra on London data.
+- Create an event node for each `(trip, stop)` arrival and departure, plus a source node at `(s, t0)`.
+- Add:
+  - **travel arcs** from a trip's departure event to its arrival event;
+  - **waiting arcs** between consecutive events at the same stop;
+  - **transfer arcs** from an arrival event to a later departure event, respecting `δ`.
+- Run Dijkstra on this static DAG. The graph is larger but the algorithm is simple and robust.
+
+Complexity: `O((V' + E') log V')` time, `O(V' + E')` space, where `V'` and `E'` are the event-graph sizes.
+
+### 5.4 Approach B — time-dependent graph + CSA
+
+- Build a connection list: `(dep_time, from_stop, arr_time, to_stop, trip_id)`.
+- Sort by `dep_time`.
+- Maintain an earliest-arrival array `arr[v]`, initialised to `∞`, with `arr[s] = t0`.
+- Scan connections in increasing departure order:
+  - if `dep_time ≥ arr[from] + buffer(from)`, and `arr_time < arr[to]`, update `arr[to]`.
+- Stop when the scan passes the target's current label (or scan the whole list).
+- No priority queue; the scan is cache-friendly.
+
+Complexity: sorting `O(C log C)` once; query `O(C)`; space `O(C + V)`.
+
+### 5.5 Leg heuristics (secondary)
+
+- **Min-wait:** time-dependent Dijkstra with cost = waiting time only.
+- **Min-ride:** time-dependent Dijkstra with cost = in-vehicle time only.
+- Both are compared against min-arrival on the same queries.
+
+### 5.6 Tour layer
+
+- **Nearest-neighbour:** from the current city and time, evaluate the earliest arrival to every unvisited city; pick the earliest; repeat.
+- **Insertion / 2-opt:** improve the tour by re-evaluating affected legs.
+- **Important:** with time-dependent, asymmetric costs, the standard 2-opt cost delta is invalid. Re-evaluate the full tour (or the affected suffix) after each move. For 30 cities this is affordable.
+- **Infeasible legs:** assign a large penalty and keep the tour; report infeasibility rather than crashing.
+- **Optimality:** the tour is heuristic. The project does not require a mathematically optimal TSP tour; the time-dependent Dijkstra is optimal only for a single leg.
+
+### 5.7 Pseudocode
+
+**Time-dependent Dijkstra (earliest arrival)**
+
+```
+function earliest_arrival(adj, s, t0, buffer):
+    dist[v] = INF for all v
+    dist[s] = t0
+    pq = min_heap((t0, s))
+    while pq not empty:
+        (time, u) = pq.pop()
+        if time > dist[u]: continue
+        for (v, departures, ride_time) in adj[u]:
+            t_ready = time + (0 if u == s else buffer)
+            dep = next_departure(departures, t_ready)   # binary search
+            if dep is None: continue
+            arr = dep + ride_time
+            if arr < dist[v]:
+                dist[v] = arr
+                pq.push((arr, v))
+    return dist
+```
+
+**Connection Scan Algorithm**
+
+```
+function csa(connections, s, t0, buffer):
+    arr[v] = INF for all v
+    arr[s] = t0
+    sort connections by dep_time
+    for c in connections:
+        if c.dep_time >= arr[c.from] + (0 if c.from == s else buffer):
+            if c.arr_time < arr[c.to]:
+                arr[c.to] = c.arr_time
+    return arr
+```
+
+**Nearest-neighbour tour**
+
+```
+function nn_tour(cities, s, t0, router):
+    tour = [s]
+    time = t0
+    unvisited = cities - {s}
+    while unvisited not empty:
+        best = None
+        for v in unvisited:
+            arr = router.earliest_arrival(tour.last, v, time)
+            if best is None or arr < best.arr:
+                best = (v, arr)
+        tour.append(best.city)
+        time = best.arr
+        unvisited.remove(best.city)
+    return tour
+```
+
+### 5.8 Complexity summary
+
+| Component | Time | Space |
+|---|---|---|
+| Time-dependent Dijkstra | `O((E + C) log V)` | `O(V + E + C)` |
+| CSA | `O(C log C)` sort + `O(C)` query | `O(C + V)` |
+| Time-expanded Dijkstra | `O((V' + E') log V')` | `O(V' + E')` |
+| Nearest-neighbour tour | `O(n² × router_cost)` | `O(V + E + C)` |
+| 2-opt with full re-evaluation | `O(n² × router_cost)` per pass | same |
 
 ---
 
-## 6. Pitfalls and things easy to miss
+## 6. Experiment design
 
-- **FIFO / overtaking.** If you fabricate both local and express services, the "first departure is best" assumption breaks. Time-dependent Dijkstra with waiting is still correct, but a naive greedy is not. Either enforce non-overtaking or document the overtaking explicitly.
-- **Transfer buffer.** Do not allow 0-minute transfers. Distinguish **initial wait** from **transfer wait**, and decide whether in-seat continuation counts as a transfer.
-- **Disconnected graph.** Initialize to infinity and return a proper "no route" result; validate that selected cities are actually served.
-- **Multiple stations per city.** Collapsing a city to one node can invent connections that do not exist. Document the abstraction.
-- **Day rollover and timezone.** Malaysia is effectively UTC+8, but the data distinguishes `Asia/Kuala_Lumpur` and `Asia/Kuching`. Normalize and document.
-- **Determinism.** Seed the RNG for fabricated times and schedules; use deterministic tie-breaking, or experiments will not reproduce.
-- **Correctness testing.** Brute-force enumerate all simple paths on tiny toy networks and compare against Dijkstra/CSA. Test:
+### Research questions
+
+- **RQ1 — Heuristic gap:** how much later do min-wait and min-ride arrive than min-arrival, and when do they fail?
+- **RQ2 — Representation trade-off:** how do time-expanded + Dijkstra and time-dependent + CSA compare in query time, preprocessing time, and memory?
+- **RQ3 — Scalability:** how do both approaches scale with city count, headway, and transfer buffer?
+- **RQ4 — Value of the redesign:** how does the classic static TSP tour perform on the real transit network compared with the time-dependent tours?
+
+### Instances
+
+- `n ∈ {10, 20, 30, 40}` cities.
+- Headways: `{15, 30, 60, 120}` minutes.
+- Transfer buffer: `{0, 5, 10}` minutes (report `δ = 5` as the main setting; `0` is a stress test).
+- Seeds: `{1, 2, 3, 4, 5}`.
+- Main configuration: `n = 30`, bus headway 30, train headway 60, `δ = 5`.
+
+### Metrics
+
+- Final arrival time `A`.
+- Total waiting `W`.
+- Total riding `R`.
+- Number of transfers.
+- Number of legs.
+- Query runtime (ms), preprocessing runtime (ms), peak memory (MB).
+- Graph size: time-expanded nodes/edges, number of connections.
+- Optimality gap of min-wait/min-ride vs min-arrival.
+- Infeasible legs (count and percentage).
+
+### Procedure
+
+1. Generate the instance with a fixed seed.
+2. Build the transit network and the schedule.
+3. Run the classic baseline, Approach A, Approach B, min-wait, and min-ride.
+4. Record metrics for the same query set.
+5. Repeat for 5 seeds; report mean, median, and standard deviation.
+6. Plot:
+   - arrival vs `n`;
+   - runtime vs `n`;
+   - memory vs `n`;
+   - heuristic gap vs headway;
+   - classic baseline vs time-dependent arrival.
+
+### Expected/hypothesis
+
+- Min-wait will be close to min-arrival when services are frequent, and worse when headways are long.
+- Min-ride will often wait for an express and can beat min-wait on arrival, but not always.
+- CSA will be faster per query but require sorting/preprocessing; time-expanded Dijkstra will use more memory.
+- The classic static tour will produce later arrivals or infeasible legs, justifying the redesign.
+
+### Per-experiment folders
+
+```
+experiments/
+  exp1_heuristics/
+    config.json
+    results.csv
+    plots/
+    README.md
+  exp2_representations/
+  exp3_scalability/
+  exp4_classic_baseline/
+```
+
+Each folder records the config, raw results, plots, and a short note on how to reproduce it.
+
+---
+
+## 7. Validation
+
+- **Toy networks** with hand-computed answers (3–5 cities, 2 lines, known timetable).
+- **Brute force** on tiny instances: enumerate all simple paths and simulate the timetable; compare with Dijkstra/CSA.
+- **Cross-check A vs B:** both must return the same earliest arrival for the same query (when both are correct; document any tie-breaking differences).
+- **Edge cases:**
   - start = end;
   - departure after the last service;
-  - a missed connection by one minute;
+  - missed connection by one minute;
   - no route;
-  - overnight trip.
-- **Metrics.** Report final arrival, total wait, total ride, number of transfers, runtime, memory, and scalability as city count and schedule density grow. A Pareto view (arrival vs transfers) is a nice addition.
-- **Spec compliance.** Per-experiment folders, reproducible data generation, README with run instructions, AI-use acknowledgment with 3 representative prompts, and a live demo without AI. A fancy UI does not count as an X-factor — spend the effort on algorithms and experiments.
+  - overnight trip (`> 24:00`);
+  - zero-population city;
+  - disconnected city.
+- **Determinism:** same seed → same network, same schedule, same results.
+- **Unit tests:** `pytest` for `next_departure`, timetable parsing, Dijkstra, CSA, and tour construction.
 
 ---
 
-## 7. Suggested milestones
+## 8. Deliverables and packaging
 
-1. **Lock the variant and scope** — objectives, city-set size, one-node-per-city decision.
-2. **Data pipeline + network generator** — clean `MY.txt`, select cities, fabricate edges and schedules, emit GTFS-like CSVs.
-3. **Baseline router** — time-dependent Dijkstra (min arrival), plus min-wait and min-ride variants; toy-network tests and brute-force validation.
-4. **Second approach** — time-expanded graph or CSA; cross-check results against the baseline.
-5. **Tour layer** — nearest-neighbour + 2-opt/insertion using the router as the leg evaluator; this is what makes it a TSP variant.
-6. **Experiments + complexity + report** — runtime, memory, arrival quality, wait/ride breakdown, scalability, trade-offs, limitations.
+### Repository structure
+
+```
+.
+├── README.md
+├── Project_2627T1.pdf
+├── CS201_2026_project/          # provided raw data (unchanged)
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── gtfs/
+├── src/
+│   ├── data/                    # cleaning and selection
+│   ├── network/                 # graph and schedule generation
+│   ├── routing/                 # dijkstra, csa, time-expanded
+│   ├── tour/                    # nn, insertion, 2-opt
+│   └── cli.py
+├── experiments/
+│   ├── exp1_heuristics/
+│   ├── exp2_representations/
+│   ├── exp3_scalability/
+│   └── exp4_classic_baseline/
+├── tests/
+├── docs/
+│   └── transit-tsp-plan.md
+└── requirements.txt
+```
+
+### Packaging
+
+- Submit `G<X>T<X>.zip` (confirm the group number).
+- Include source code, data in the used format, per-experiment folders, `requirements.txt`, and `README.md`.
+- README must state:
+  - folder structure;
+  - install command;
+  - how to regenerate data;
+  - how to run each experiment;
+  - how to run the CLI;
+  - Python version and dependencies;
+  - random seeds.
+
+### CLI (minimal)
+
+```
+python -m src.cli route --from "Kuala Lumpur" --to "Penang" --time 08:00
+python -m src.cli tour --cities cities.txt --start "Kuala Lumpur" --time 08:00 --method csa
+```
+
+A simple map plot of the selected cities and lines is enough; a full UI is not required.
 
 ---
 
-## 8. Bottom line
+## 9. Presentation plan
 
-- **The two algorithms are not the same**, and comparing by final arrival does not unify them. Min-wait and min-ride are heuristics; min-arrival (`W + R`) is the true objective.
-- Add a **third baseline** (time-dependent Dijkstra minimizing arrival) and measure the gap.
-- The bus/train idea fits the assignment only if it is framed as a **time-dependent TSP variant**, not just a point-to-point router.
-- The strongest two-approach story is **time-expanded graph vs time-dependent graph/CSA**, with min-wait and min-ride as secondary objective experiments.
+The spec's rubric includes **interestingness 10%, experimentation 30%, presentation 40%, X-factor 10%**. The presentation is the largest single component; plan it from the start.
+
+### Slide outline (15 slides)
+
+1. Title and team.
+2. Motivation: why classic TSP is not enough for transit.
+3. Classic TSP assumptions vs transit reality (the table from Section 1.2).
+4. Use case and scope.
+5. Variant: input, output, constraints, objective.
+6. Data pipeline: GeoNames → cleaned cities → lines → schedules.
+7. Approach A: time-expanded graph (diagram + pseudocode).
+8. Approach B: time-dependent graph + CSA (diagram + pseudocode).
+9. Tour layer: NN + insertion/2-opt, time-dependent re-evaluation.
+10. Experiment design: RQs, instances, metrics.
+11. Results: heuristic gap (RQ1).
+12. Results: representation trade-off and scalability (RQ2, RQ3).
+13. Results: classic baseline vs time-dependent (RQ4).
+14. Complexity analysis and trade-offs.
+15. Limitations, interesting findings, AI usage, and demo.
+
+### Presentation rules
+
+- Every member must be able to explain and modify at least one module.
+- No AI during the live presentation.
+- Rehearse the demo with a fixed seed so it is reproducible.
+- Keep backup screenshots/CSVs in case the live demo fails.
+
+### X-factor ideas (optional, only if time permits)
+
+- A map visualisation of the chosen tour with waiting/riding segments.
+- A Pareto plot of arrival vs transfers.
+- A "what-if" slider for headway (offline, precomputed).
+
+A fancy UI does not count as an X-factor; a meaningful visualisation of the algorithmic trade-off does.
 
 ---
 
-## 9. References
+## 10. Timeline
+
+Assuming ~15 days (2+ weeks). Adjust to the actual calendar.
+
+| Day | Work |
+|---|---|
+| 1 | Lock variant and scope; create repo skeleton; choose Python; write README stub |
+| 2 | Clean `MY.txt`; select top 30 cities; document data decisions |
+| 3 | Build geometric graph, MST connectivity, lines, coverage |
+| 4 | Generate schedules; emit GTFS-like CSVs; validate monotonic times |
+| 5 | Build loaders; toy network; unit tests for parsing and `next_departure` |
+| 6 | Classic static TSP baseline (distance + NN/2-opt) |
+| 7 | Time-dependent Dijkstra (min arrival); min-wait and min-ride variants |
+| 8 | Test and cross-check; **fallback decision point** for Approach A |
+| 9 | Time-expanded graph + Dijkstra |
+| 10 | CSA implementation |
+| 11 | Cross-check A vs B; fix discrepancies |
+| 12 | Tour layer: NN + insertion/2-opt with full re-evaluation |
+| 13 | Run experiments; save configs/results/plots |
+| 14 | Analyse results; write report sections; complexity analysis |
+| 15 | Slides, rehearsal, packaging, final checks |
+
+**Buffer rule:** if day 8 is not on track, drop the time-expanded graph and use time-dependent Dijkstra vs CSA. Do not drop the experiments or the presentation.
+
+---
+
+## 11. Team roles and peer evaluation
+
+Assign one owner per module, plus a pairing partner for peer evaluation.
+
+| Role | Owner | Backup |
+|---|---|---|
+| Data cleaning and city selection | TBD | TBD |
+| Network and schedule generation | TBD | TBD |
+| Approach A (time-expanded + Dijkstra) | TBD | TBD |
+| Approach B (CSA) | TBD | TBD |
+| Tour layer and experiments | TBD | TBD |
+| Presentation and QA | TBD | TBD |
+
+Every member must be able to:
+
+- explain the variant and the objective;
+- run the pipeline and the experiments;
+- modify at least one module;
+- answer questions about complexity and trade-offs.
+
+Schedule at least two internal rehearsals before the live presentation.
+
+---
+
+## 12. AI policy
+
+The spec allows AI for brainstorming, experiment design, sample data generation, coding, debugging, and slides, but requires acknowledgment.
+
+- [ ] Keep a prompt log from day 1 (tool, date, purpose, prompt, what was used).
+- [ ] Include **3 representative prompts** in the report.
+- [ ] State which parts are original and which are AI-assisted.
+- [ ] Do not use AI during the live presentation.
+- [ ] Ensure every member can explain and modify the work without AI.
+
+---
+
+## 13. Risks and mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Data generator bugs | Wrong results, irreproducible experiments | Validation, seeds, toy tests |
+| Scope creep | Missed deadline | Locked non-goals; day-8 fallback |
+| Time-dependent 2-opt invalid delta | Wrong tour improvement | Full re-evaluation or insertion heuristic |
+| CSA bugs | Wrong arrival times | Cross-check with Dijkstra on toy and random instances |
+| Disconnected cities | Infeasible legs | MST connectivity + coverage repair |
+| Presentation under-prepared | 40% of grade at risk | Start slides by day 12; two rehearsals |
+| Team availability | Delays | Pairing, clear owners, buffer day |
+| AI-policy violation | Penalty | Prompt log and live rehearsal without AI |
+
+---
+
+## 14. Compliance checklist
+
+### Problem and design
+
+- [ ] Starts from the classic TSP and states it.
+- [ ] Identifies a realistic use case.
+- [ ] States at least one classic assumption that fails.
+- [ ] Defines a new TSP variant with input, output, and constraints.
+- [ ] Justifies why the redesign is necessary.
+
+### Implementation
+
+- [ ] At least two meaningfully different approaches.
+- [ ] Approaches differ in data structure and/or algorithm, not parameters.
+- [ ] Classic baseline for comparison.
+- [ ] Core algorithms implemented (not just library calls).
+
+### Evaluation
+
+- [ ] Experiment design with RQs, instances, metrics, seeds.
+- [ ] Results with tables/plots.
+- [ ] Complexity analysis for each approach.
+- [ ] Trade-offs and limitations discussed.
+
+### Data
+
+- [ ] GeoNames `MY.txt` is the primary source.
+- [ ] Records, columns, filtering, and subset justified.
+- [ ] Every fabricated attribute documented.
+- [ ] Generation is reproducible (seeds, scripts).
+
+### Deliverables
+
+- [ ] `G<X>T<X>.zip` with code, data, experiments, README.
+- [ ] Per-experiment folders with configs, results, plots.
+- [ ] README with install and run instructions.
+- [ ] `requirements.txt` and Python version.
+
+### Presentation
+
+- [ ] Slides cover motivation, variant, data, approaches, pseudocode, results, complexity, trade-offs, limitations, interesting findings, AI usage.
+- [ ] Every member can explain and modify their module.
+- [ ] Live demo rehearsed without AI.
+- [ ] AI prompt log with 3 representative prompts.
+
+---
+
+## 15. References
 
 1. GTFS Schedule Reference — <https://gtfs.org/documentation/schedule/reference/>
 2. J. Dibbelt, T. Pajor, B. Strasser, D. Wagner, "Connection Scan Algorithm," *ACM Journal of Experimental Algorithmics* 23, 2018 — <https://doi.org/10.1145/3274661> ; arXiv:1703.05997
