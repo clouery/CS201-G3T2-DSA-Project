@@ -155,7 +155,7 @@ In a general timetable they do not coincide.
 
 ## 3. Locked scope
 
-> **Summary:** The scope is deliberately small: 30 cities (10/20/30/40 for scalability), one node per city, 8–12 lines, fixed headways, a 5-minute transfer buffer, and two approaches (time-expanded + Dijkstra vs time-dependent + CSA). RAPTOR, real GTFS, stochastic delays, and a polished UI are out of scope.
+> **Summary:** The scope is deliberately small: 30 cities (10/20/30/40 for scalability), one node per city, 8–12 lines, fixed headways, a 5-minute transfer buffer, and two approaches (time-expanded + Dijkstra vs time-dependent + CSA). RAPTOR, real GTFS, real-time delays, and a polished UI are out of scope.
 
 ### In scope
 
@@ -177,7 +177,7 @@ In a general timetable they do not coincide.
 
 - Real GTFS feeds or real Malaysian timetables.
 - RAPTOR / McRAPTOR.
-- Stochastic delays and reliability objectives.
+- Real-time delays, stochastic travel times, and reliability objectives.
 - Time windows, pickup/delivery, vehicle routing.
 - Multiple stations per city, walking footpaths.
 - A polished UI. A simple CLI and one map plot are enough.
@@ -207,9 +207,9 @@ GeoNames supplies **nodes, not a network**.
 
 1. Drop coordinate outliers (roughly 6 rows).
 2. Deduplicate repeated name + coordinate points (roughly 25).
-3. Validate latitude/longitude against a Malaysia bounding box.
-4. Handle blank timezones; Malaysia is effectively UTC+8, but `Asia/Kuala_Lumpur` and `Asia/Kuching` are both present.
-5. Keep `geonameid`, `name`, `latitude`, `longitude`, `feature class`, `feature code`, `population`, `admin1`, `timezone`.
+3. Validate latitude/longitude against a Malaysia bounding box. Coordinates are used only for distance-based network generation, outlier checks, and optional map plots — the routing algorithms consume the resulting edge list and timetable, not raw coordinates.
+4. Use a single local time. Malaysia is UTC+8 with no DST, and both `Asia/Kuala_Lumpur` and `Asia/Kuching` resolve to UTC+8. Ignore the timezone column; document this assumption.
+5. Keep `geonameid`, `name`, `latitude`, `longitude`, `feature class`, `feature code`, `population`, `admin1`. Drop `timezone` from the routing model.
 
 ### 4.3 City selection
 
@@ -228,7 +228,7 @@ GeoNames supplies **nodes, not a network**.
 5. **Modes:**
    - bus for lines whose longest segment is < 200 km;
    - train otherwise.
-6. **Travel time:** `distance / speed × (1 + noise)`, with bus ≈ 60 km/h, train ≈ 100 km/h, noise ≈ 5–10%.
+6. **Travel time:** `distance / speed`, with bus ≈ 60 km/h, train ≈ 100 km/h. Travel times are fully deterministic and reproducible.
 7. **Direction:** each line runs in both directions with the same segment times (or separate directional trips; document).
 8. **Seed:** every random choice uses a fixed seed stored in `config.json`.
 
@@ -262,7 +262,7 @@ Write a dedicated report section covering:
 - [ ] Columns used and why.
 - [ ] Filtering/preprocessing steps.
 - [ ] Subset justification (top 30 by population).
-- [ ] Every fabricated attribute: lines, modes, speeds, noise, headways, first/last departures, transfer buffer.
+- [ ] Every fabricated attribute: lines, modes, speeds, headways, first/last departures, transfer buffer.
 - [ ] Derived attributes (distance, travel time, trip times).
 - [ ] Random seeds and generation script.
 - [ ] Known limitations (synthetic schedule, one node per city, no walking).
@@ -282,6 +282,8 @@ Write a dedicated report section covering:
 - Connection array sorted by departure time for CSA.
 - Time-expanded DAG for Approach A.
 - Memoisation table for leg results keyed by `(from, to, departure_time)` during tour construction.
+
+**Why adjacency list, not a matrix.** The transit graph is sparse: each city is on a few lines, so `E = O(V)`. A matrix would waste `O(V²)` space and cannot naturally hold a sorted departure array per directed edge. Dijkstra and CSA iterate over neighbours, not random pairs, so the adjacency list is the right fit. The classic baseline uses a dense distance matrix because its graph is complete — that contrast is worth reporting. At `V = 30` the memory difference is negligible, but the list matches the problem structure and scales to the time-expanded graph.
 
 ### 5.2 Classic baseline (not one of the two approaches)
 
