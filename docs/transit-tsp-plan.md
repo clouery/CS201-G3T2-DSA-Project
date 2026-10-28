@@ -5,7 +5,7 @@
 > **Status:** direction locked. Keep the transit TSP idea; de-risk the scope.
 > **Deadline:** Week 12, Sunday 11pm. **Peer evaluation:** Week 13.
 > **Primary data:** GeoNames `CS201_2026_project/MY.txt`.
-> **Recommended language:** Python 3.11+ (core algorithms from scratch; `pandas`/`matplotlib` only for data and plots).
+> **Language:** Java 21 (LTS), built with Maven (core algorithms from scratch; JUnit 5 for tests, XChart for plots only).
 >
 > Group number placeholder: `G<X>T<X>` (confirm before packaging).
 
@@ -170,8 +170,8 @@ In a general timetable they do not coincide.
 - **Shared tour layer:** nearest-neighbour + insertion/2-opt with full re-evaluation.
 - **Classic baseline:** static TSP on a complete distance graph, same tour heuristic.
 - **Secondary leg modes:** min-wait, min-ride.
-- **Language:** Python 3.11+.
-- **Core algorithms implemented from scratch**; `pandas` for CSV and `matplotlib` for plots only.
+- **Language:** Java 21, Maven build.
+- **Core algorithms implemented from scratch**; CSV/TSV parsing with the standard library, JUnit 5 for tests, and XChart for plots only.
 
 ### Out of scope (do not build)
 
@@ -230,7 +230,7 @@ GeoNames supplies **nodes, not a network**.
    - train otherwise.
 6. **Travel time:** `distance / speed`, with bus ≈ 60 km/h, train ≈ 100 km/h. Travel times are fully deterministic and reproducible.
 7. **Direction:** each line runs in both directions with the same segment times (or separate directional trips; document).
-8. **Seed:** every random choice uses a fixed seed stored in `config.json`.
+8. **Seed:** every random choice uses a fixed seed stored in `config.properties` (read with `java.util.Properties`; all randomness goes through one seeded `java.util.Random`).
 
 ### 4.5 Schedule generation
 
@@ -246,11 +246,11 @@ Emit CSVs under `data/gtfs/`:
 
 | File               | Columns                                                           |
 | ------------------ | ----------------------------------------------------------------- |
-| `stops.csv`      | `stop_id, name, lat, lon`                                       |
-| `routes.csv`     | `route_id, mode, name`                                          |
-| `trips.csv`      | `trip_id, route_id, direction, start_time`                      |
-| `stop_times.csv` | `trip_id, stop_sequence, stop_id, arrival_time, departure_time` |
-| `transfers.csv`  | `from_stop, to_stop, min_transfer_time` (v1: same-stop only)    |
+| `stops.csv`        | `stop_id, name, lat, lon`                                         |
+| `routes.csv`       | `route_id, mode, name`                                            |
+| `trips.csv`        | `trip_id, route_id, direction, start_time`                        |
+| `stop_times.csv`   | `trip_id, stop_sequence, stop_id, arrival_time, departure_time`   |
+| `transfers.csv`    | `from_stop, to_stop, min_transfer_time` (v1: same-stop only)      |
 
 Times are integer minutes from the service-day start, allowing values `> 1440`.
 
@@ -277,8 +277,8 @@ Write a dedicated report section covering:
 
 - Adjacency list for the geometric graph.
 - **Sorted departure arrays per directed edge**, with binary search for the next departure `≥ t`.
-- Min-heap / priority queue for Dijkstra.
-- Hash map city name → id.
+- Min-heap / priority queue for Dijkstra (`java.util.PriorityQueue` with lazy deletion).
+- Hash map city name → id (`HashMap<String, Integer>`).
 - Connection array sorted by departure time for CSA.
 - Time-expanded DAG for Approach A.
 - Memoisation table for leg results keyed by `(from, to, departure_time)` during tour construction.
@@ -389,11 +389,11 @@ function nn_tour(cities, s, t0, router):
 
 | Component                     | Time                                 | Space            |
 | ----------------------------- | ------------------------------------ | ---------------- |
-| Time-dependent Dijkstra       | `O((E + C) log V)`                 | `O(V + E + C)` |
-| CSA                           | `O(C log C)` sort + `O(C)` query | `O(C + V)`     |
-| Time-expanded Dijkstra        | `O((V' + E') log V')`              | `O(V' + E')`   |
-| Nearest-neighbour tour        | `O(n² × router_cost)`            | `O(V + E + C)` |
-| 2-opt with full re-evaluation | `O(n² × router_cost)` per pass   | same             |
+| Time-dependent Dijkstra       | `O((E + C) log V)`                   | `O(V + E + C)`   |
+| CSA                           | `O(C log C)` sort + `O(C)` query     | `O(C + V)`       |
+| Time-expanded Dijkstra        | `O((V' + E') log V')`                | `O(V' + E')`     |
+| Nearest-neighbour tour        | `O(n² × router_cost)`                | `O(V + E + C)`   |
+| 2-opt with full re-evaluation | `O(n² × router_cost)` per pass       | same             |
 
 ---
 
@@ -454,7 +454,7 @@ function nn_tour(cities, s, t0, router):
 ```
 experiments/
   exp1_heuristics/
-    config.json
+    config.properties
     results.csv
     plots/
     README.md
@@ -483,7 +483,7 @@ Each folder records the config, raw results, plots, and a short note on how to r
   - zero-population city;
   - disconnected city.
 - **Determinism:** same seed → same network, same schedule, same results.
-- **Unit tests:** `pytest` for `next_departure`, timetable parsing, Dijkstra, CSA, and tour construction.
+- **Unit tests:** JUnit 5 (`mvn test`) for `nextDeparture`, timetable parsing, Dijkstra, CSA, and tour construction. Toy networks live in `src/test/resources/toy/`.
 
 ---
 
@@ -503,40 +503,52 @@ Each folder records the config, raw results, plots, and a short note on how to r
 │   ├── processed/
 │   └── gtfs/
 ├── src/
-│   ├── data/                    # cleaning and selection
-│   ├── network/                 # graph and schedule generation
-│   ├── routing/                 # dijkstra, csa, time-expanded
-│   ├── tour/                    # nn, insertion, 2-opt
-│   └── cli.py
+│   ├── main/
+│   │   ├── java/tdtsp/
+│   │   │   ├── data/            # cleaning and selection
+│   │   │   ├── network/         # graph and schedule generation, GTFS I/O
+│   │   │   ├── routing/         # dijkstra, csa, time-expanded
+│   │   │   ├── tour/            # nn, insertion, 2-opt, classic baseline
+│   │   │   └── cli/             # command-line entry point
+│   │   └── resources/
+│   └── test/
+│       ├── java/tdtsp/          # JUnit 5 tests mirroring main packages
+│       │   ├── data/
+│       │   ├── network/
+│       │   ├── routing/
+│       │   └── tour/
+│       └── resources/toy/       # toy networks with hand-computed answers
 ├── experiments/
 │   ├── exp1_heuristics/
 │   ├── exp2_representations/
 │   ├── exp3_scalability/
 │   └── exp4_classic_baseline/
-├── tests/
 ├── docs/
 │   └── transit-tsp-plan.md
-└── requirements.txt
+├── config.properties            # generation parameters and seed
+└── pom.xml
 ```
+
+Rename the `tdtsp` package if the group prefers a reverse-domain name; keep main and test packages in sync.
 
 ### Packaging
 
 - Submit `G<X>T<X>.zip` (confirm the group number).
-- Include source code, data in the used format, per-experiment folders, `requirements.txt`, and `README.md`.
+- Include source code, data in the used format, per-experiment folders, `pom.xml`, and `README.md`. Exclude `target/`.
 - README must state:
   - folder structure;
-  - install command;
+  - build command (`mvn package`);
   - how to regenerate data;
   - how to run each experiment;
   - how to run the CLI;
-  - Python version and dependencies;
+  - Java and Maven versions and dependencies;
   - random seeds.
 
 ### CLI (minimal)
 
 ```
-python -m src.cli route --from "Kuala Lumpur" --to "Penang" --time 08:00
-python -m src.cli tour --cities cities.txt --start "Kuala Lumpur" --time 08:00 --method csa
+java -jar target/tdtsp.jar route --from "Kuala Lumpur" --to "Penang" --time 08:00
+java -jar target/tdtsp.jar tour --cities cities.txt --start "Kuala Lumpur" --time 08:00 --method csa
 ```
 
 A simple map plot of the selected cities and lines is enough; a full UI is not required.
@@ -592,14 +604,14 @@ Assuming ~15 days (2+ weeks). Adjust to the actual calendar.
 
 | Day | Work                                                                           |
 | --- | ------------------------------------------------------------------------------ |
-| 1   | Lock variant and scope; create repo skeleton; choose Python; write README stub |
-| 2   | Clean `MY.txt`; select top 30 cities; document data decisions                |
+| 1   | Lock variant and scope; create repo skeleton; set up Maven + JUnit; write README stub |
+| 2   | Clean `MY.txt`; select top 30 cities; document data decisions                  |
 | 3   | Build geometric graph, MST connectivity, lines, coverage                       |
 | 4   | Generate schedules; emit GTFS-like CSVs; validate monotonic times              |
-| 5   | Build loaders; toy network; unit tests for parsing and `next_departure`      |
+| 5   | Build loaders; toy network; unit tests for parsing and `next_departure`        |
 | 6   | Classic static TSP baseline (distance + NN/2-opt)                              |
 | 7   | Time-dependent Dijkstra (min arrival); min-wait and min-ride variants          |
-| 8   | Test and cross-check; **fallback decision point** for Approach A         |
+| 8   | Test and cross-check; **fallback decision point** for Approach A               |
 | 9   | Time-expanded graph + Dijkstra                                                 |
 | 10  | CSA implementation                                                             |
 | 11  | Cross-check A vs B; fix discrepancies                                          |
@@ -707,7 +719,7 @@ The spec allows AI for brainstorming, experiment design, sample data generation,
 - [ ] `G<X>T<X>.zip` with code, data, experiments, README.
 - [ ] Per-experiment folders with configs, results, plots.
 - [ ] README with install and run instructions.
-- [ ] `requirements.txt` and Python version.
+- [ ] `pom.xml` and Java version.
 
 ### Presentation
 
