@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+<title id="title">Malaysia Transit Network — 30 cities and 11 synthetic lines</title>
+<desc id="desc">A map of the synthetic transit network generated from the GeoNames Malaysia extract. 30 Malaysian cities, including Kuching in Sarawak and Kota Kinabalu, Sandakan and Tawau in Sabah, are connected by 7 bus and 4 train lines. Long dashed segments cross the South China Sea.</desc>
+<style>
+text{font-family:Inter,"Helvetica Neue",Helvetica,Arial,sans-serif}
+.title{font-size:30px;font-weight:700;fill:#1F2937;letter-spacing:-0.6px}
+.subtitle{font-size:13px;fill:#6B7280}
+.kicker{font-size:9px;letter-spacing:2.2px;fill:#6F685C}
+.grid{stroke:#E7E2D6;stroke-width:1;stroke-dasharray:2 6}
+.gridlabel{font-size:9px;fill:#6F685C}
+.region{font-size:10px;letter-spacing:2.4px;fill:#6F685C}
+.sea{font-size:10.5px;letter-spacing:3.4px;fill:#6F685C;paint-order:stroke;stroke:#F7F4ED;stroke-width:5px;stroke-linejoin:round}
+.city{fill:#1F2937;stroke:#FFFFFF;stroke-width:1.2}
+.citylabel{font-size:10.5px;font-weight:600;fill:#1F2937;paint-order:stroke;stroke:#F7F4ED;stroke-width:5px;stroke-linejoin:round}
+.linepill{font-size:8px;font-weight:700}
+.footerhead{font-size:9px;letter-spacing:1.8px;fill:#6B6458}
+.footerrow{font-size:10px;fill:#374151}
+.footerrank{font-size:9px;fill:#8C8578}
+.footerstate{font-size:9.5px;fill:#5F5A50}
+.footernote{font-size:9.5px;fill:#6B6458}
+.legend{font-size:9.5px;fill:#374151}
+.summary{font-size:9.5px;fill:#4B5563}
+</style>
+<rect width="1600" height="980" fill="#F7F4ED"/>
+<rect x="60" y="36" width="28" height="4" fill="#0B5F5A"/>
+<rect x="88" y="36" width="28" height="4" fill="#B45309"/>
+<text x="60" y="74" class="title">Malaysia Transit Network</text>
+<text x="60" y="98" class="subtitle">30 cities · 11 synthetic lines · 7 bus / 4 train · seed 42</text>
+<text x="1540" y="74" text-anchor="end" class="kicker">GEONAMES MY.TXT · HAVERSINE k-NN</text>
+<line x1="106.7" y1="120" x2="106.7" y2="650" class="grid"/>
+<text x="106.7" y="665" text-anchor="middle" class="gridlabel">100°E</text>
+<line x1="262.5" y1="120" x2="262.5" y2="650" class="grid"/>
+<text x="262.5" y="665" text-anchor="middle" class="gridlabel">102°E</text>
+<line x1="418.3" y1="120" x2="418.3" y2="650" class="grid"/>
+<text x="418.3" y="665" text-anchor="middle" class="gridlabel">104°E</text>
+<line x1="574.1" y1="120" x2="574.1" y2="650" class="grid"/>
+<text x="574.1" y="665" text-anchor="middle" class="gridlabel">106°E</text>
+<line x1="729.9" y1="120" x2="729.9" y2="650" class="grid"/>
+<text x="729.9" y="665" text-anchor="middle" class="gridlabel">108°E</text>
+<line x1="885.7" y1="120" x2="885.7" y2="650" class="grid"/>
+<text x="885.7" y="665" text-anchor="middle" class="gridlabel">110°E</text>
+<line x1="1041.5" y1="120" x2="1041.5" y2="650" class="grid"/>
+<text x="1041.5" y="665" text-anchor="middle" class="gridlabel">112°E</text>
+<line x1="1197.3" y1="120" x2="1197.3" y2="650" class="grid"/>
+<text x="1197.3" y="665" text-anchor="middle" class="gridlabel">114°E</text>
+<line x1="1353.1" y1="120" x2="1353.1" y2="650" class="grid"/>
+<text x="1353.1" y="665" text-anchor="middle" class="gridlabel">116°E</text>
+<line x1="1508.8" y1="120" x2="1508.8" y2="650" class="grid"/>
+<text x="1508.8" y="665" text-anchor="middle" class="gridlabel">118°E</text>
+<line x1="60" y1="517.7" x2="1540" y2="517.7" class="grid"/>
+<text x="52" y="520.7" text-anchor="end" class="gridlabel">2°N</text>
+<line x1="60" y1="361.6" x2="1540" y2="361.6" class="grid"/>
+<text x="52" y="364.6" text-anchor="end" class="gridlabel">4°N</text>
+<line x1="60" y1="205.5" x2="1540" y2="205.5" class="grid"/>
+<text x="52" y="208.5" text-anchor="end" class="gridlabel">6°N</text>
+<text x="254.7" y="172.7" text-anchor="middle" class="region">PENINSULAR MALAYSIA</text>
+<text x="1376.4" y="172.7" text-anchor="middle" class="region">SABAH</text>
+<text x="1025.9" y="591.9" text-anchor="middle" class="region">SARAWAK</text>
+<text x="683.2" y="390" text-anchor="middle" class="sea">SOUTH CHINA SEA</text>
+<line x1="229.8" y1="427.6" x2="228.3" y2="422.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="229.8" y1="427.6" x2="228.3" y2="422.7" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="228.3" y1="422.7" x2="235.2" y2="424.1" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="228.3" y1="422.7" x2="235.2" y2="424.1" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="235.2" y1="424.1" x2="236.6" y2="419.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="235.2" y1="424.1" x2="236.6" y2="419.7" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="236.6" y1="419.7" x2="241.3" y2="423.5" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="236.6" y1="419.7" x2="241.3" y2="423.5" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="232.7" y1="439.6" x2="229.8" y2="427.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="232.7" y1="439.6" x2="229.8" y2="427.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="229.8" y1="427.6" x2="228.3" y2="422.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="229.8" y1="427.6" x2="228.3" y2="422.7" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="228.3" y1="422.7" x2="236.6" y2="419.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="228.3" y1="422.7" x2="236.6" y2="419.7" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="236.6" y1="419.7" x2="365.8" y2="376.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="236.6" y1="419.7" x2="365.8" y2="376.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="365.8" y1="376.6" x2="351.4" y2="257.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="365.8" y1="376.6" x2="351.4" y2="257.8" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="226.2" y1="427.9" x2="229.8" y2="427.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="226.2" y1="427.9" x2="229.8" y2="427.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="229.8" y1="427.6" x2="226.1" y2="433.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="229.8" y1="427.6" x2="226.1" y2="433.0" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="226.1" y1="433.0" x2="232.7" y2="439.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="226.1" y1="433.0" x2="232.7" y2="439.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="257.7" y1="460.7" x2="232.7" y2="439.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="257.7" y1="460.7" x2="232.7" y2="439.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="232.7" y1="439.6" x2="238.1" y2="428.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="232.7" y1="439.6" x2="238.1" y2="428.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="238.1" y1="428.6" x2="235.2" y2="424.1" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="238.1" y1="428.6" x2="235.2" y2="424.1" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="235.2" y1="424.1" x2="229.8" y2="427.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="235.2" y1="424.1" x2="229.8" y2="427.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="281.3" y1="502.4" x2="257.7" y2="460.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="281.3" y1="502.4" x2="257.7" y2="460.7" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="257.7" y1="460.7" x2="241.3" y2="423.5" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="257.7" y1="460.7" x2="241.3" y2="423.5" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="241.3" y1="423.5" x2="238.1" y2="428.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="241.3" y1="423.5" x2="238.1" y2="428.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="238.1" y1="428.6" x2="232.7" y2="439.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="238.1" y1="428.6" x2="232.7" y2="439.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="365.1" y1="515.3" x2="281.3" y2="502.4" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="365.1" y1="515.3" x2="281.3" y2="502.4" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="281.3" y1="502.4" x2="232.7" y2="439.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="281.3" y1="502.4" x2="232.7" y2="439.6" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="232.7" y1="439.6" x2="226.1" y2="433.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="232.7" y1="439.6" x2="226.1" y2="433.0" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="399.2" y1="554.2" x2="365.1" y2="515.3" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="399.2" y1="554.2" x2="365.1" y2="515.3" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="365.1" y1="515.3" x2="392.4" y2="554.1" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="365.1" y1="515.3" x2="392.4" y2="554.1" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="392.4" y1="554.1" x2="398.4" y2="556.5" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="392.4" y1="554.1" x2="398.4" y2="556.5" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="398.4" y1="556.5" x2="404.6" y2="554.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="398.4" y1="556.5" x2="404.6" y2="554.8" stroke="#0B5F5A" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="191.1" y1="316.0" x2="351.4" y2="257.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="191.1" y1="316.0" x2="351.4" y2="257.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="281.5" y1="195.8" x2="144.7" y2="233.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="281.5" y1="195.8" x2="144.7" y2="233.0" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="144.7" y1="233.0" x2="134.8" y2="196.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="144.7" y1="233.0" x2="134.8" y2="196.0" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="134.8" y1="196.0" x2="135.6" y2="237.6" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="134.8" y1="196.0" x2="135.6" y2="237.6" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="365.8" y1="376.6" x2="351.4" y2="257.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="365.8" y1="376.6" x2="351.4" y2="257.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="351.4" y1="257.8" x2="281.5" y2="195.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="281.5" y1="195.8" x2="144.7" y2="233.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="281.5" y1="195.8" x2="144.7" y2="233.0" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="144.7" y1="233.0" x2="191.1" y2="316.0" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="144.7" y1="233.0" x2="191.1" y2="316.0" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="191.1" y1="316.0" x2="228.3" y2="422.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="191.1" y1="316.0" x2="228.3" y2="422.7" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="389.0" y1="565.1" x2="399.4" y2="559.4" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="389.0" y1="565.1" x2="399.4" y2="559.4" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="399.4" y1="559.4" x2="398.4" y2="556.5" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="399.4" y1="559.4" x2="398.4" y2="556.5" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="398.4" y1="556.5" x2="399.2" y2="554.2" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="398.4" y1="556.5" x2="399.2" y2="554.2" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="399.2" y1="554.2" x2="410.9" y2="559.7" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="399.2" y1="554.2" x2="410.9" y2="559.7" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="410.9" y1="559.7" x2="911.6" y2="552.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="410.9" y1="559.7" x2="911.6" y2="552.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88" stroke-dasharray="7 5"/>
+<line x1="911.6" y1="552.8" x2="1358.7" y2="207.4" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="911.6" y1="552.8" x2="1358.7" y2="207.4" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88" stroke-dasharray="7 5"/>
+<line x1="1358.7" y1="207.4" x2="1518.0" y2="217.9" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="1358.7" y1="207.4" x2="1518.0" y2="217.9" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="1518.0" y1="217.9" x2="1500.4" y2="342.5" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="1518.0" y1="217.9" x2="1500.4" y2="342.5" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="1500.4" y1="342.5" x2="1358.7" y2="207.4" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="1500.4" y1="342.5" x2="1358.7" y2="207.4" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88"/>
+<line x1="1358.7" y1="207.4" x2="911.6" y2="552.8" stroke="#F7F4ED" stroke-width="6.5" stroke-linecap="round" opacity="0.92"/>
+<line x1="1358.7" y1="207.4" x2="911.6" y2="552.8" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" opacity="0.88" stroke-dasharray="7 5"/>
+<circle cx="365.1" cy="515.3" r="5.47" class="city"><title>Kluang — Johor — 323,762 — L08, L09</title></circle>
+<circle cx="241.3" cy="423.5" r="5.57" class="city"><title>Setapak — Selangor — 353,268 — L03, L07</title></circle>
+<circle cx="1500.4" cy="342.5" r="5.63" class="city"><title>Tawau — Sabah — 372,615 — L11</title></circle>
+<circle cx="257.7" cy="460.7" r="5.63" class="city"><title>Seremban — Negeri Sembilan — 372,917 — L06, L07</title></circle>
+<circle cx="232.7" cy="439.6" r="5.64" class="city"><title>Puchong — Selangor — 375,181 — L04, L05, L06, L07, L08</title></circle>
+<circle cx="911.6" cy="552.8" r="5.73" class="city"><title>Kuching — Sarawak — 402,738 — L10, L11</title></circle>
+<circle cx="399.2" cy="554.2" r="5.76" class="city"><title>Kampung Kangkar Teberau — Johor — 412,373 — L09, L10</title></circle>
+<circle cx="134.8" cy="196.0" r="5.77" class="city"><title>Alor Setar — Kedah — 417,800 — L01</title></circle>
+<circle cx="235.2" cy="424.1" r="5.79" class="city"><title>Taman Petaling — Kuala Lumpur — 423,062 — L03, L06</title></circle>
+<circle cx="351.4" cy="257.8" r="5.80" class="city"><title>Kuala Terengganu — Terengganu — 426,500 — L01, L02, L04</title></circle>
+<circle cx="1518.0" cy="217.9" r="5.84" class="city"><title>Sandakan — Sabah — 439,050 — L10, L11</title></circle>
+<circle cx="398.4" cy="556.5" r="6.01" class="city"><title>Kampung Larkin Lama — Johor — 500,000 — L09, L10</title></circle>
+<circle cx="229.8" cy="427.6" r="6.01" class="city"><title>Kota Damansara — Selangor — 500,000 — L03, L04, L05, L06</title></circle>
+<circle cx="1358.7" cy="207.4" r="6.02" class="city"><title>Kota Kinabalu — Sabah — 500,421 — L10, L11</title></circle>
+<circle cx="392.4" cy="554.1" r="6.03" class="city"><title>Mukim Pulai — Johor — 505,661 — L09</title></circle>
+<circle cx="410.9" cy="559.7" r="6.11" class="city"><title>Pasir Gudang — Johor — 534,659 — L10</title></circle>
+<circle cx="236.6" cy="419.7" r="6.13" class="city"><title>Selayang Baru Utara — Selangor — 542,409 — L03, L04</title></circle>
+<circle cx="144.7" cy="233.0" r="6.14" class="city"><title>Sungai Petani — Kedah — 544,851 — L01, L02</title></circle>
+<circle cx="135.6" cy="237.6" r="6.14" class="city"><title>Kota Kuala Muda — Kedah — 544,984 — L01</title></circle>
+<circle cx="365.8" cy="376.6" r="6.15" class="city"><title>Kuantan — Pahang — 548,014 — L02, L04</title></circle>
+<circle cx="281.5" cy="195.8" r="6.20" class="city"><title>Kota Bharu — Kelantan — 568,900 — L01, L02, L04</title></circle>
+<circle cx="389.0" cy="565.1" r="6.22" class="city"><title>Iskandar Puteri — Johor — 575,977 — L10</title></circle>
+<circle cx="281.3" cy="502.4" r="6.23" class="city"><title>Malacca — Melaka — 579,000 — L07, L08</title></circle>
+<circle cx="404.6" cy="554.8" r="6.24" class="city"><title>Pelentong — Johor — 583,640 — L09</title></circle>
+<circle cx="228.3" cy="422.7" r="6.30" class="city"><title>Bukit Rahman Putra — Selangor — 607,000 — L02, L03, L04</title></circle>
+<circle cx="226.1" cy="433.0" r="6.63" class="city"><title>Shah Alam — Selangor — 740,750 — L05, L08</title></circle>
+<circle cx="191.1" cy="316.0" r="6.67" class="city"><title>Ipoh — Perak — 759,952 — L01, L02</title></circle>
+<circle cx="226.2" cy="427.9" r="6.83" class="city"><title>Kampung Baru Subang — Selangor — 833,571 — L05</title></circle>
+<circle cx="399.4" cy="559.4" r="6.89" class="city"><title>Johor Bahru — Johor — 858,118 — L10</title></circle>
+<circle cx="238.1" cy="428.6" r="8.00" class="city"><title>Kuala Lumpur — Kuala Lumpur — 1,453,975 — L06, L07</title></circle>
+<text x="253.1" y="416.6" text-anchor="start" class="citylabel">Kuala Lumpur</text>
+<text x="414.4" y="579.4" text-anchor="start" class="citylabel">Johor Bahru</text>
+<text x="176.1" y="334.0" text-anchor="end" class="citylabel">Ipoh</text>
+<text x="296.3" y="522.4" text-anchor="start" class="citylabel">Malacca</text>
+<text x="296.5" y="185.8" text-anchor="start" class="citylabel">Kota Bharu</text>
+<text x="380.8" y="393.6" text-anchor="start" class="citylabel">Kuantan</text>
+<text x="366.4" y="247.8" text-anchor="start" class="citylabel">Kuala Terengganu</text>
+<text x="119.8" y="186.0" text-anchor="end" class="citylabel">Alor Setar</text>
+<text x="896.6" y="572.8" text-anchor="end" class="citylabel">Kuching</text>
+<text x="1373.7" y="197.4" text-anchor="start" class="citylabel">Kota Kinabalu</text>
+<text x="1503.0" y="207.9" text-anchor="end" class="citylabel">Sandakan</text>
+<text x="1485.4" y="370.5" text-anchor="end" class="citylabel">Tawau</text>
+<line x1="231.8" y1="423.4" x2="209.8" y2="405.4" stroke="#8C8578" stroke-width="1.1" opacity="0.9"/>
+<circle cx="231.8" cy="423.4" r="1.6" fill="#0B5F5A" opacity="0.9"/>
+<rect x="197.8" y="399.4" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="209.8" y="408.0" text-anchor="middle" class="linepill" fill="#0B5F5A">L03</text>
+<rect x="289.2" y="374.2" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="301.2" y="382.8" text-anchor="middle" class="linepill" fill="#0B5F5A">L04</text>
+<rect x="217.4" y="448.3" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="229.4" y="456.9" text-anchor="middle" class="linepill" fill="#0B5F5A">L05</text>
+<line x1="245.2" y1="450.2" x2="267.2" y2="432.2" stroke="#8C8578" stroke-width="1.1" opacity="0.9"/>
+<circle cx="245.2" cy="450.2" r="1.6" fill="#0B5F5A" opacity="0.9"/>
+<rect x="255.2" y="426.2" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="267.2" y="434.8" text-anchor="middle" class="linepill" fill="#0B5F5A">L06</text>
+<rect x="279.5" y="475.6" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="291.5" y="484.2" text-anchor="middle" class="linepill" fill="#0B5F5A">L07</text>
+<rect x="311.2" y="484.9" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="323.2" y="493.5" text-anchor="middle" class="linepill" fill="#0B5F5A">L08</text>
+<rect x="392.2" y="528.8" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#0B5F5A" stroke-width="1"/>
+<text x="404.2" y="537.4" text-anchor="middle" class="linepill" fill="#0B5F5A">L09</text>
+<rect x="259.2" y="262.9" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#B45309" stroke-width="1"/>
+<text x="271.2" y="271.5" text-anchor="middle" class="linepill" fill="#B45309">L01</text>
+<rect x="201.1" y="190.4" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#B45309" stroke-width="1"/>
+<text x="213.1" y="199.0" text-anchor="middle" class="linepill" fill="#B45309">L02</text>
+<rect x="1123.2" y="356.1" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#B45309" stroke-width="1"/>
+<text x="1135.2" y="364.7" text-anchor="middle" class="linepill" fill="#B45309">L10</text>
+<rect x="1190.2" y="304.3" width="24" height="12" rx="6" fill="#FFFDF8" stroke="#B45309" stroke-width="1"/>
+<text x="1202.2" y="312.9" text-anchor="middle" class="linepill" fill="#B45309">L11</text>
+<line x1="560" y1="588" x2="700.2" y2="588" stroke="#8C8578" stroke-width="2"/>
+<line x1="560" y1="583" x2="560" y2="593" stroke="#8C8578" stroke-width="2"/>
+<line x1="700.2" y1="583" x2="700.2" y2="593" stroke="#8C8578" stroke-width="2"/>
+<text x="630.1" y="578" text-anchor="middle" class="gridlabel">200 km</text>
+<line x1="1490" y1="200" x2="1490" y2="176" stroke="#8C8578" stroke-width="1.6"/>
+<path d="M 1490 170 L 1485.5 180 L 1494.5 180 Z" fill="#8C8578"/>
+<text x="1490" y="164" text-anchor="middle" class="gridlabel">N</text>
+<rect x="60" y="690" width="1480" height="245" rx="12" fill="#FFFDF8" fill-opacity="0.78" stroke="#E7E2D6"/>
+<line x1="500" y1="712" x2="500" y2="916" stroke="#E7E2D6"/>
+<text x="84" y="718" class="footerhead">LEGEND</text>
+<line x1="84" y1="742" x2="124" y2="742" stroke="#0B5F5A" stroke-width="3" stroke-linecap="round"/>
+<text x="134" y="746" class="legend">Bus line — 30 min headway</text>
+<line x1="84" y1="766" x2="124" y2="766" stroke="#B45309" stroke-width="3" stroke-linecap="round"/>
+<text x="134" y="770" class="legend">Train line — 60 min headway</text>
+<line x1="84" y1="790" x2="124" y2="790" stroke="#B45309" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4"/>
+<text x="134" y="794" class="legend">Long segment over 500 km</text>
+<circle cx="94" cy="814" r="5" class="city"/>
+<text x="134" y="818" class="legend">City — size by population</text>
+<text x="84" y="850" class="summary">30 cities · 11 lines · 598 trips · 3,126 stop times</text>
+<text x="84" y="874" class="footernote" font-style="italic">Sabah and Sarawak are Malaysian states on Borneo.</text>
+<text x="84" y="892" class="footernote" font-style="italic">Dashed links are synthetic sea crossings, not real rail.</text>
+<text x="84" y="910" class="footernote" font-style="italic">Key cities labelled; Klang Valley and Johor clusters overlap; all 30 listed below.</text>
+<text x="520" y="718" class="footerhead">CITIES (POPULATION ORDER)</text>
+<line x1="520" y1="728" x2="1518" y2="728" stroke="#E7E2D6"/>
+<line x1="850" y1="738" x2="850" y2="900" stroke="#E7E2D6"/>
+<line x1="1190" y1="738" x2="1190" y2="900" stroke="#E7E2D6"/>
+<text x="520" y="746.0" class="footerrank">01</text>
+<text x="542" y="746.0" class="footerrow">Kuala Lumpur</text>
+<text x="670" y="746.0" class="footerstate">Kuala Lumpur</text>
+<text x="838" y="746.0" text-anchor="end" class="footerrow">1,453,975</text>
+<text x="520" y="762.0" class="footerrank">02</text>
+<text x="542" y="762.0" class="footerrow">Johor Bahru</text>
+<text x="670" y="762.0" class="footerstate">Johor</text>
+<text x="838" y="762.0" text-anchor="end" class="footerrow">858,118</text>
+<text x="520" y="778.0" class="footerrank">03</text>
+<text x="542" y="778.0" class="footerrow">Kampung Baru Subang</text>
+<text x="670" y="778.0" class="footerstate">Selangor</text>
+<text x="838" y="778.0" text-anchor="end" class="footerrow">833,571</text>
+<text x="520" y="794.0" class="footerrank">04</text>
+<text x="542" y="794.0" class="footerrow">Ipoh</text>
+<text x="670" y="794.0" class="footerstate">Perak</text>
+<text x="838" y="794.0" text-anchor="end" class="footerrow">759,952</text>
+<text x="520" y="810.0" class="footerrank">05</text>
+<text x="542" y="810.0" class="footerrow">Shah Alam</text>
+<text x="670" y="810.0" class="footerstate">Selangor</text>
+<text x="838" y="810.0" text-anchor="end" class="footerrow">740,750</text>
+<text x="520" y="826.0" class="footerrank">06</text>
+<text x="542" y="826.0" class="footerrow">Bukit Rahman Putra</text>
+<text x="670" y="826.0" class="footerstate">Selangor</text>
+<text x="838" y="826.0" text-anchor="end" class="footerrow">607,000</text>
+<text x="520" y="842.0" class="footerrank">07</text>
+<text x="542" y="842.0" class="footerrow">Pelentong</text>
+<text x="670" y="842.0" class="footerstate">Johor</text>
+<text x="838" y="842.0" text-anchor="end" class="footerrow">583,640</text>
+<text x="520" y="858.0" class="footerrank">08</text>
+<text x="542" y="858.0" class="footerrow">Malacca</text>
+<text x="670" y="858.0" class="footerstate">Melaka</text>
+<text x="838" y="858.0" text-anchor="end" class="footerrow">579,000</text>
+<text x="520" y="874.0" class="footerrank">09</text>
+<text x="542" y="874.0" class="footerrow">Iskandar Puteri</text>
+<text x="670" y="874.0" class="footerstate">Johor</text>
+<text x="838" y="874.0" text-anchor="end" class="footerrow">575,977</text>
+<text x="520" y="890.0" class="footerrank">10</text>
+<text x="542" y="890.0" class="footerrow">Kota Bharu</text>
+<text x="670" y="890.0" class="footerstate">Kelantan</text>
+<text x="838" y="890.0" text-anchor="end" class="footerrow">568,900</text>
+<text x="860" y="746.0" class="footerrank">11</text>
+<text x="882" y="746.0" class="footerrow">Kuantan</text>
+<text x="1010" y="746.0" class="footerstate">Pahang</text>
+<text x="1178" y="746.0" text-anchor="end" class="footerrow">548,014</text>
+<text x="860" y="762.0" class="footerrank">12</text>
+<text x="882" y="762.0" class="footerrow">Kota Kuala Muda</text>
+<text x="1010" y="762.0" class="footerstate">Kedah</text>
+<text x="1178" y="762.0" text-anchor="end" class="footerrow">544,984</text>
+<text x="860" y="778.0" class="footerrank">13</text>
+<text x="882" y="778.0" class="footerrow">Sungai Petani</text>
+<text x="1010" y="778.0" class="footerstate">Kedah</text>
+<text x="1178" y="778.0" text-anchor="end" class="footerrow">544,851</text>
+<text x="860" y="794.0" class="footerrank">14</text>
+<text x="882" y="794.0" class="footerrow">Selayang Baru Utara</text>
+<text x="1010" y="794.0" class="footerstate">Selangor</text>
+<text x="1178" y="794.0" text-anchor="end" class="footerrow">542,409</text>
+<text x="860" y="810.0" class="footerrank">15</text>
+<text x="882" y="810.0" class="footerrow">Pasir Gudang</text>
+<text x="1010" y="810.0" class="footerstate">Johor</text>
+<text x="1178" y="810.0" text-anchor="end" class="footerrow">534,659</text>
+<text x="860" y="826.0" class="footerrank">16</text>
+<text x="882" y="826.0" class="footerrow">Mukim Pulai</text>
+<text x="1010" y="826.0" class="footerstate">Johor</text>
+<text x="1178" y="826.0" text-anchor="end" class="footerrow">505,661</text>
+<text x="860" y="842.0" class="footerrank">17</text>
+<text x="882" y="842.0" class="footerrow">Kota Kinabalu</text>
+<text x="1010" y="842.0" class="footerstate">Sabah</text>
+<text x="1178" y="842.0" text-anchor="end" class="footerrow">500,421</text>
+<text x="860" y="858.0" class="footerrank">18</text>
+<text x="882" y="858.0" class="footerrow">Kampung Larkin Lama</text>
+<text x="1010" y="858.0" class="footerstate">Johor</text>
+<text x="1178" y="858.0" text-anchor="end" class="footerrow">500,000</text>
+<text x="860" y="874.0" class="footerrank">19</text>
+<text x="882" y="874.0" class="footerrow">Kota Damansara</text>
+<text x="1010" y="874.0" class="footerstate">Selangor</text>
+<text x="1178" y="874.0" text-anchor="end" class="footerrow">500,000</text>
+<text x="860" y="890.0" class="footerrank">20</text>
+<text x="882" y="890.0" class="footerrow">Sandakan</text>
+<text x="1010" y="890.0" class="footerstate">Sabah</text>
+<text x="1178" y="890.0" text-anchor="end" class="footerrow">439,050</text>
+<text x="1200" y="746.0" class="footerrank">21</text>
+<text x="1222" y="746.0" class="footerrow">Kuala Terengganu</text>
+<text x="1350" y="746.0" class="footerstate">Terengganu</text>
+<text x="1518" y="746.0" text-anchor="end" class="footerrow">426,500</text>
+<text x="1200" y="762.0" class="footerrank">22</text>
+<text x="1222" y="762.0" class="footerrow">Taman Petaling</text>
+<text x="1350" y="762.0" class="footerstate">Kuala Lumpur</text>
+<text x="1518" y="762.0" text-anchor="end" class="footerrow">423,062</text>
+<text x="1200" y="778.0" class="footerrank">23</text>
+<text x="1222" y="778.0" class="footerrow">Alor Setar</text>
+<text x="1350" y="778.0" class="footerstate">Kedah</text>
+<text x="1518" y="778.0" text-anchor="end" class="footerrow">417,800</text>
+<text x="1200" y="794.0" class="footerrank">24</text>
+<text x="1222" y="794.0" class="footerrow">Kampung Kangkar Teberau</text>
+<text x="1350" y="794.0" class="footerstate">Johor</text>
+<text x="1518" y="794.0" text-anchor="end" class="footerrow">412,373</text>
+<text x="1200" y="810.0" class="footerrank">25</text>
+<text x="1222" y="810.0" class="footerrow">Kuching</text>
+<text x="1350" y="810.0" class="footerstate">Sarawak</text>
+<text x="1518" y="810.0" text-anchor="end" class="footerrow">402,738</text>
+<text x="1200" y="826.0" class="footerrank">26</text>
+<text x="1222" y="826.0" class="footerrow">Puchong</text>
+<text x="1350" y="826.0" class="footerstate">Selangor</text>
+<text x="1518" y="826.0" text-anchor="end" class="footerrow">375,181</text>
+<text x="1200" y="842.0" class="footerrank">27</text>
+<text x="1222" y="842.0" class="footerrow">Seremban</text>
+<text x="1350" y="842.0" class="footerstate">Negeri Sembilan</text>
+<text x="1518" y="842.0" text-anchor="end" class="footerrow">372,917</text>
+<text x="1200" y="858.0" class="footerrank">28</text>
+<text x="1222" y="858.0" class="footerrow">Tawau</text>
+<text x="1350" y="858.0" class="footerstate">Sabah</text>
+<text x="1518" y="858.0" text-anchor="end" class="footerrow">372,615</text>
+<text x="1200" y="874.0" class="footerrank">29</text>
+<text x="1222" y="874.0" class="footerrow">Setapak</text>
+<text x="1350" y="874.0" class="footerstate">Selangor</text>
+<text x="1518" y="874.0" text-anchor="end" class="footerrow">353,268</text>
+<text x="1200" y="890.0" class="footerrank">30</text>
+<text x="1222" y="890.0" class="footerrow">Kluang</text>
+<text x="1350" y="890.0" class="footerstate">Johor</text>
+<text x="1518" y="890.0" text-anchor="end" class="footerrow">323,762</text>
+<text x="60" y="960" class="footernote">Source: GeoNames MY.txt (CC BY 4.0) · 30 of 725 eligible cities · network: k=3, seed 42 · data/processed/cities_top30.csv + lines.csv</text>
+</svg>

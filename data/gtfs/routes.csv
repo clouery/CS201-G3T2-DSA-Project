@@ -1,0 +1,12 @@
+route_id,mode,name
+R01,train,Line 01
+R02,train,Line 02
+R03,bus,Line 03
+R04,bus,Line 04
+R05,bus,Line 05
+R06,bus,Line 06
+R07,bus,Line 07
+R08,bus,Line 08
+R09,bus,Line 09
+R10,train,Line 10
+R11,train,Line 11
