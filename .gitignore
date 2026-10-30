@@ -1,1 +1,7 @@
 .serena
+target/
+.DS_Store
+*.class
+.classpath
+.project
+.settings/
