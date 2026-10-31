@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="78" y="26" font-size="16" font-weight="bold" fill="#111827">Query time vs buffer</text>
+<rect x="78.0" y="38" width="12" height="12" fill="#2563eb"/>
+<text x="95.0" y="48" font-size="12" fill="#374151">time_expanded</text>
+<rect x="199.0" y="38" width="12" height="12" fill="#dc2626"/>
+<text x="216.0" y="48" font-size="12" fill="#374151">csa</text>
+<rect x="250.0" y="38" width="12" height="12" fill="#16a34a"/>
+<text x="267.0" y="48" font-size="12" fill="#374151">td_dijkstra</text>
+<line x1="78" x2="696" y1="358.0" y2="358.0" stroke="#e5e7eb"/>
+<text x="70" y="362.0" text-anchor="end" font-size="11" fill="#6b7280">0</text>
+<line x1="78" x2="696" y1="300.4" y2="300.4" stroke="#e5e7eb"/>
+<text x="70" y="304.4" text-anchor="end" font-size="11" fill="#6b7280">50</text>
+<line x1="78" x2="696" y1="242.8" y2="242.8" stroke="#e5e7eb"/>
+<text x="70" y="246.8" text-anchor="end" font-size="11" fill="#6b7280">100</text>
+<line x1="78" x2="696" y1="185.2" y2="185.2" stroke="#e5e7eb"/>
+<text x="70" y="189.2" text-anchor="end" font-size="11" fill="#6b7280">150</text>
+<line x1="78" x2="696" y1="127.6" y2="127.6" stroke="#e5e7eb"/>
+<text x="70" y="131.6" text-anchor="end" font-size="11" fill="#6b7280">200</text>
+<line x1="78" x2="696" y1="70.0" y2="70.0" stroke="#e5e7eb"/>
+<text x="70" y="74.0" text-anchor="end" font-size="11" fill="#6b7280">250</text>
+<line x1="78" x2="78" y1="70" y2="358" stroke="#9ca3af"/>
+<line x1="78" x2="696" y1="358" y2="358" stroke="#9ca3af"/>
+<text x="181.0" y="376" text-anchor="middle" font-size="12" fill="#374151">0</text>
+<text x="387.0" y="376" text-anchor="middle" font-size="12" fill="#374151">5</text>
+<text x="593.0" y="376" text-anchor="middle" font-size="12" fill="#374151">10</text>
+<text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Transfer buffer (min)</text>
+<text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Mean time per query (µs)</text>
+<path d="M181.0,132.5 L387.0,119.6 L593.0,118.4" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="181.0" cy="132.5" r="4" fill="#2563eb"/>
+<circle cx="387.0" cy="119.6" r="4" fill="#2563eb"/>
+<circle cx="593.0" cy="118.4" r="4" fill="#2563eb"/>
+<path d="M181.0,348.1 L387.0,347.8 L593.0,347.9" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="181.0" cy="348.1" r="4" fill="#dc2626"/>
+<circle cx="387.0" cy="347.8" r="4" fill="#dc2626"/>
+<circle cx="593.0" cy="347.9" r="4" fill="#dc2626"/>
+<path d="M181.0,303.0 L387.0,296.0 L593.0,297.6" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="181.0" cy="303.0" r="4" fill="#16a34a"/>
+<circle cx="387.0" cy="296.0" r="4" fill="#16a34a"/>
+<circle cx="593.0" cy="297.6" r="4" fill="#16a34a"/>
+</svg>
