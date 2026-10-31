@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="78" y="26" font-size="16" font-weight="bold" fill="#111827">Tour duration vs cities (CSA legs)</text>
+<rect x="78.0" y="38" width="12" height="12" fill="#2563eb"/>
+<text x="95.0" y="48" font-size="12" fill="#374151">nearest neighbour</text>
+<rect x="227.0" y="38" width="12" height="12" fill="#dc2626"/>
+<text x="244.0" y="48" font-size="12" fill="#374151">NN + 2-opt/insertion</text>
+<line x1="78" x2="696" y1="358.0" y2="358.0" stroke="#e5e7eb"/>
+<text x="70" y="362.0" text-anchor="end" font-size="11" fill="#6b7280">0</text>
+<line x1="78" x2="696" y1="300.4" y2="300.4" stroke="#e5e7eb"/>
+<text x="70" y="304.4" text-anchor="end" font-size="11" fill="#6b7280">20</text>
+<line x1="78" x2="696" y1="242.8" y2="242.8" stroke="#e5e7eb"/>
+<text x="70" y="246.8" text-anchor="end" font-size="11" fill="#6b7280">40</text>
+<line x1="78" x2="696" y1="185.2" y2="185.2" stroke="#e5e7eb"/>
+<text x="70" y="189.2" text-anchor="end" font-size="11" fill="#6b7280">60</text>
+<line x1="78" x2="696" y1="127.6" y2="127.6" stroke="#e5e7eb"/>
+<text x="70" y="131.6" text-anchor="end" font-size="11" fill="#6b7280">80</text>
+<line x1="78" x2="696" y1="70.0" y2="70.0" stroke="#e5e7eb"/>
+<text x="70" y="74.0" text-anchor="end" font-size="11" fill="#6b7280">100</text>
+<line x1="78" x2="78" y1="70" y2="358" stroke="#9ca3af"/>
+<line x1="78" x2="696" y1="358" y2="358" stroke="#9ca3af"/>
+<text x="155.3" y="376" text-anchor="middle" font-size="12" fill="#374151">10</text>
+<text x="309.8" y="376" text-anchor="middle" font-size="12" fill="#374151">20</text>
+<text x="464.3" y="376" text-anchor="middle" font-size="12" fill="#374151">30</text>
+<text x="618.8" y="376" text-anchor="middle" font-size="12" fill="#374151">40</text>
+<text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Cities (n)</text>
+<text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Tour duration (h)</text>
+<path d="M155.3,307.8 L309.8,168.2 L464.3,157.9 L618.8,77.0" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="155.3" cy="307.8" r="4" fill="#2563eb"/>
+<circle cx="309.8" cy="168.2" r="4" fill="#2563eb"/>
+<circle cx="464.3" cy="157.9" r="4" fill="#2563eb"/>
+<circle cx="618.8" cy="77.0" r="4" fill="#2563eb"/>
+<path d="M155.3,316.6 L309.8,179.9 L464.3,177.5 L618.8,129.2" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="155.3" cy="316.6" r="4" fill="#dc2626"/>
+<circle cx="309.8" cy="179.9" r="4" fill="#dc2626"/>
+<circle cx="464.3" cy="177.5" r="4" fill="#dc2626"/>
+<circle cx="618.8" cy="129.2" r="4" fill="#dc2626"/>
+</svg>

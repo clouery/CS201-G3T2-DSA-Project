@@ -208,75 +208,16 @@ public final class NetworkGenerator {
             }
         }
 
-        for (int city = 0; city < n; city++) {
-            if (coverage[city] > 0) {
-                continue;
-            }
-
-            int bestLine = -1;
-            int bestPosition = -1;
-            double bestCost = Double.POSITIVE_INFINITY;
-            for (int lineIndex = 0; lineIndex < rawLines.size(); lineIndex++) {
-                List<Integer> line = rawLines.get(lineIndex);
-                if (line.size() >= maxStops) {
-                    continue;
-                }
-                for (int position = 0; position <= line.size(); position++) {
-                    if (!preservesGraphEdges(graph, line, position, city)) {
-                        continue;
-                    }
-                    double cost = insertionCost(graph, line, position, city);
-                    if (cost < bestCost - 1e-9) {
-                        bestCost = cost;
-                        bestLine = lineIndex;
-                        bestPosition = position;
-                    }
+        // A city whose graph neighbours are all still uncovered cannot be placed yet, so
+        // repair in passes until a pass makes no progress.
+        boolean progress = true;
+        while (progress) {
+            progress = false;
+            for (int city = 0; city < n; city++) {
+                if (coverage[city] == 0 && tryCover(graph, rawLines, coverage, city)) {
+                    progress = true;
                 }
             }
-            if (bestLine >= 0) {
-                rawLines.get(bestLine).add(bestPosition, city);
-                coverage[city]++;
-                continue;
-            }
-
-            // No line has spare capacity: swap the city for a duplicated stop
-            // while keeping both new segments on graph edges.
-            int replaceLine = -1;
-            int replacePosition = -1;
-            int replacedCity = -1;
-            bestCost = Double.POSITIVE_INFINITY;
-            for (int lineIndex = 0; lineIndex < rawLines.size(); lineIndex++) {
-                List<Integer> line = rawLines.get(lineIndex);
-                for (int position = 0; position < line.size(); position++) {
-                    int old = line.get(position);
-                    if (coverage[old] <= 1) {
-                        continue;
-                    }
-                    if (!preservesReplacementGraphEdges(graph, line, position, city)) {
-                        continue;
-                    }
-                    double cost = replacementCost(graph, line, position, city);
-                    if (cost < bestCost - 1e-9) {
-                        bestCost = cost;
-                        replaceLine = lineIndex;
-                        replacePosition = position;
-                        replacedCity = old;
-                    }
-                }
-            }
-            if (replaceLine >= 0) {
-                rawLines.get(replaceLine).set(replacePosition, city);
-                coverage[replacedCity]--;
-                coverage[city]++;
-                continue;
-            }
-
-            // No capacity and no safe replacement: add a short repair line that
-            // attaches to the existing service network through a graph neighbour.
-            if (tryAddRepairLine(graph, rawLines, coverage, city, minStops, maxStops)) {
-                continue;
-            }
-            throw new IllegalStateException("no capacity to cover city index " + city);
         }
 
         for (int city = 0; city < n; city++) {
@@ -308,6 +249,71 @@ public final class NetworkGenerator {
                     List.copyOf(segmentKm), List.copyOf(segmentMin)));
         }
         return lines;
+    }
+
+    /** Covers {@code city} by insertion, replacement or a repair line; false if none applies yet. */
+    private boolean tryCover(Graph graph, List<List<Integer>> rawLines, int[] coverage, int city) {
+        int bestLine = -1;
+        int bestPosition = -1;
+        double bestCost = Double.POSITIVE_INFINITY;
+        for (int lineIndex = 0; lineIndex < rawLines.size(); lineIndex++) {
+            List<Integer> line = rawLines.get(lineIndex);
+            if (line.size() >= maxStops) {
+                continue;
+            }
+            for (int position = 0; position <= line.size(); position++) {
+                if (!preservesGraphEdges(graph, line, position, city)) {
+                    continue;
+                }
+                double cost = insertionCost(graph, line, position, city);
+                if (cost < bestCost - 1e-9) {
+                    bestCost = cost;
+                    bestLine = lineIndex;
+                    bestPosition = position;
+                }
+            }
+        }
+        if (bestLine >= 0) {
+            rawLines.get(bestLine).add(bestPosition, city);
+            coverage[city]++;
+            return true;
+        }
+
+        // No line has spare capacity: swap the city for a duplicated stop
+        // while keeping both new segments on graph edges.
+        int replaceLine = -1;
+        int replacePosition = -1;
+        int replacedCity = -1;
+        bestCost = Double.POSITIVE_INFINITY;
+        for (int lineIndex = 0; lineIndex < rawLines.size(); lineIndex++) {
+            List<Integer> line = rawLines.get(lineIndex);
+            for (int position = 0; position < line.size(); position++) {
+                int old = line.get(position);
+                if (coverage[old] <= 1) {
+                    continue;
+                }
+                if (!preservesReplacementGraphEdges(graph, line, position, city)) {
+                    continue;
+                }
+                double cost = replacementCost(graph, line, position, city);
+                if (cost < bestCost - 1e-9) {
+                    bestCost = cost;
+                    replaceLine = lineIndex;
+                    replacePosition = position;
+                    replacedCity = old;
+                }
+            }
+        }
+        if (replaceLine >= 0) {
+            rawLines.get(replaceLine).set(replacePosition, city);
+            coverage[replacedCity]--;
+            coverage[city]++;
+            return true;
+        }
+
+        // No capacity and no safe replacement: add a short repair line that
+        // attaches to the existing service network through a graph neighbour.
+        return tryAddRepairLine(graph, rawLines, coverage, city, minStops, maxStops);
     }
 
     private static boolean tryAddRepairLine(Graph graph, List<List<Integer>> rawLines, int[] coverage,
@@ -842,10 +848,14 @@ public final class NetworkGenerator {
     }
 
     public static double haversineKm(City a, City b) {
-        double lat1 = Math.toRadians(a.latitude());
-        double lat2 = Math.toRadians(b.latitude());
+        return haversineKm(a.latitude(), a.longitude(), b.latitude(), b.longitude());
+    }
+
+    public static double haversineKm(double latA, double lonA, double latB, double lonB) {
+        double lat1 = Math.toRadians(latA);
+        double lat2 = Math.toRadians(latB);
         double deltaLat = lat2 - lat1;
-        double deltaLon = Math.toRadians(b.longitude() - a.longitude());
+        double deltaLon = Math.toRadians(lonB - lonA);
         double h = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
                 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
         return 2 * EARTH_RADIUS_KM * Math.asin(Math.min(1.0, Math.sqrt(h)));

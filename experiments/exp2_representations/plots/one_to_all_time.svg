@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="78" y="26" font-size="16" font-weight="bold" fill="#111827">One-to-all query time (n = 30)</text>
+<rect x="78.0" y="38" width="12" height="12" fill="#2563eb"/>
+<text x="95.0" y="48" font-size="12" fill="#374151">mean over seeds</text>
+<line x1="78" x2="696" y1="358.0" y2="358.0" stroke="#e5e7eb"/>
+<text x="70" y="362.0" text-anchor="end" font-size="11" fill="#6b7280">0</text>
+<line x1="78" x2="696" y1="300.4" y2="300.4" stroke="#e5e7eb"/>
+<text x="70" y="304.4" text-anchor="end" font-size="11" fill="#6b7280">2000</text>
+<line x1="78" x2="696" y1="242.8" y2="242.8" stroke="#e5e7eb"/>
+<text x="70" y="246.8" text-anchor="end" font-size="11" fill="#6b7280">4000</text>
+<line x1="78" x2="696" y1="185.2" y2="185.2" stroke="#e5e7eb"/>
+<text x="70" y="189.2" text-anchor="end" font-size="11" fill="#6b7280">6000</text>
+<line x1="78" x2="696" y1="127.6" y2="127.6" stroke="#e5e7eb"/>
+<text x="70" y="131.6" text-anchor="end" font-size="11" fill="#6b7280">8000</text>
+<line x1="78" x2="696" y1="70.0" y2="70.0" stroke="#e5e7eb"/>
+<text x="70" y="74.0" text-anchor="end" font-size="11" fill="#6b7280">10000</text>
+<line x1="78" x2="78" y1="70" y2="358" stroke="#9ca3af"/>
+<line x1="78" x2="696" y1="358" y2="358" stroke="#9ca3af"/>
+<text x="181.0" y="376" text-anchor="middle" font-size="12" fill="#374151">time_expanded</text>
+<text x="387.0" y="376" text-anchor="middle" font-size="12" fill="#374151">csa</text>
+<text x="593.0" y="376" text-anchor="middle" font-size="12" fill="#374151">td_dijkstra</text>
+<text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Approach</text>
+<text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Mean time per query (µs)</text>
+<rect x="108.9" y="117.0" width="142.2" height="241.0" fill="#2563eb"/>
+<text x="180.0" y="112.0" text-anchor="middle" font-size="11" fill="#374151">8367.4</text>
+<rect x="314.9" y="355.6" width="142.2" height="2.4" fill="#2563eb"/>
+<text x="386.0" y="350.6" text-anchor="middle" font-size="11" fill="#374151">82.9</text>
+<rect x="520.9" y="354.1" width="142.2" height="3.9" fill="#2563eb"/>
+<text x="592.0" y="349.1" text-anchor="middle" font-size="11" fill="#374151">137.1</text>
+</svg>

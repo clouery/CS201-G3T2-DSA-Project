@@ -1,0 +1,7 @@
+trip_id,route_id,direction,start_time
+A1,R1,0,480
+A2,R1,0,510
+A3,R1,0,540
+A4,R1,0,570
+B1,R2,0,513
+B2,R2,0,515

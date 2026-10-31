@@ -5,7 +5,7 @@
 > **Status:** direction locked. Keep the transit TSP idea; de-risk the scope.
 > **Deadline:** Week 12, Sunday 11pm. **Peer evaluation:** Week 13.
 > **Primary data:** GeoNames `CS201_2026_project/MY.txt`.
-> **Language:** Java 21 (LTS), built with Maven (core algorithms from scratch; JUnit 5 for tests, XChart for plots only).
+> **Language:** Java 21 (LTS), built with Maven (core algorithms from scratch; JUnit 5 for tests, a small hand-written SVG chart writer for plots).
 >
 > Group number placeholder: `G<X>T<X>` (confirm before packaging).
 
@@ -171,7 +171,7 @@ In a general timetable they do not coincide.
 - **Classic baseline:** static TSP on a complete distance graph, same tour heuristic.
 - **Secondary leg modes:** min-wait, min-ride.
 - **Language:** Java 21, Maven build.
-- **Core algorithms implemented from scratch**; CSV/TSV parsing with the standard library, JUnit 5 for tests, and XChart for plots only.
+- **Core algorithms implemented from scratch**; CSV/TSV parsing with the standard library, JUnit 5 for tests, and a small hand-written SVG chart writer for plots (no plotting dependency).
 
 ### Out of scope (do not build)
 
@@ -239,6 +239,7 @@ GeoNames supplies **nodes, not a network**.
 - Optional peak frequency (e.g. 15 min for bus 07:00–09:00 and 17:00–19:00) — only if time permits.
 - Expand each line into concrete trips: for each departure slot, create a trip with stop times at each stop.
 - Ensure no trip overlaps itself and all times are monotonically increasing.
+- **Multi-day horizon (experiments):** a 30-city tour takes several days, so the routers repeat the one-day timetable for `days` consecutive days (day `d` shifted by `d × 1440` minutes, with its own trip ids). Set per experiment in `experiments/*/config.properties` (default 14).
 
 ### 4.6 GTFS-like schema
 
@@ -423,7 +424,7 @@ function nn_tour(cities, s, t0, router):
 - Total riding `R`.
 - Number of transfers.
 - Number of legs.
-- Query runtime (ms), preprocessing runtime (ms), peak memory (MB).
+- Query runtime (µs), preprocessing runtime (ms), memory (MB, estimated from the preprocessed structure's array sizes; JVM peak heap is too noisy under garbage collection).
 - Graph size: time-expanded nodes/edges, number of connections.
 - Optimality gap of min-wait/min-ride vs min-arrival.
 - Infeasible legs (count and percentage).
