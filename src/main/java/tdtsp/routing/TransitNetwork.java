@@ -207,4 +207,30 @@ public final class TransitNetwork {
     public int indexOf(String name) {
         return nameIndex.getOrDefault(name, -1);
     }
+
+    /** Number of scheduled stops within a particular trip. */
+    public int tripStopCount(int trip) {
+        return tripStops[trip].length;
+    }
+
+    /** Stop index at a particular position in a trip. */
+    public int tripStop(int trip, int sequence) {
+        return tripStops[trip][sequence];
+    }
+
+    /** Arrival time at a particular position in a trip. */
+    public int tripArrival(int trip, int sequence) {
+        return tripArrivals[trip][sequence];
+    }
+
+    /** Departure time at a particular position in a trip. */
+    public int tripDeparture(int trip, int sequence) {
+        return tripDepartures[trip][sequence];
+    }
+
+    /** Route and direction pattern associated with a trip. */
+    public String tripPattern(int trip) {
+        return tripPattern[trip];
+    }
+
 }
