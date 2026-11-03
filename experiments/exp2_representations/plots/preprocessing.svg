@@ -22,10 +22,10 @@
 <text x="593.0" y="376" text-anchor="middle" font-size="12" fill="#374151">td_dijkstra</text>
 <text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Approach</text>
 <text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Build time (ms)</text>
-<rect x="108.9" y="110.7" width="142.2" height="247.3" fill="#2563eb"/>
-<text x="180.0" y="105.7" text-anchor="middle" font-size="11" fill="#374151">10.7</text>
-<rect x="314.9" y="229.2" width="142.2" height="128.8" fill="#2563eb"/>
-<text x="386.0" y="224.2" text-anchor="middle" font-size="11" fill="#374151">5.6</text>
-<rect x="520.9" y="298.8" width="142.2" height="59.2" fill="#2563eb"/>
-<text x="592.0" y="293.8" text-anchor="middle" font-size="11" fill="#374151">2.6</text>
+<rect x="108.9" y="88.8" width="142.2" height="269.2" fill="#2563eb"/>
+<text x="180.0" y="83.8" text-anchor="middle" font-size="11" fill="#374151">11.7</text>
+<rect x="314.9" y="172.8" width="142.2" height="185.2" fill="#2563eb"/>
+<text x="386.0" y="167.8" text-anchor="middle" font-size="11" fill="#374151">8.0</text>
+<rect x="520.9" y="301.9" width="142.2" height="56.1" fill="#2563eb"/>
+<text x="592.0" y="296.9" text-anchor="middle" font-size="11" fill="#374151">2.4</text>
 </svg>
