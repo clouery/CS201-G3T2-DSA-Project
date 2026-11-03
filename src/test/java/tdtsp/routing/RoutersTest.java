@@ -1,14 +1,13 @@
 package tdtsp.routing;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -156,5 +155,52 @@ class RoutersTest {
                 assertTrue(rideLeg.ride() <= best.ride(), "min-ride rides no longer than min-arrival");
             }
         }
+    }
+
+    // Test that TimeExpandedGraph still works even if connections are not entered in chronological order
+    @Test
+    void timeExpandedGraphHandlesUnsortedConnections() {
+        Connection[] connections = {
+            new Connection(510, 1, 540, 2, 0),
+            new Connection(480, 0, 510, 1, 0),
+            new Connection(540, 2, 570, 3, 0)
+        };
+
+        TimeExpandedGraph graph = new TimeExpandedGraph(
+            connections,
+            4,
+            5
+        );
+
+        int[] arrivals = graph.earliestArrival(0, 480);
+
+        assertEquals(480, arrivals[0]);
+        assertEquals(510, arrivals[1]);
+        assertEquals(540, arrivals[2]);
+        assertEquals(570, arrivals[3]);
+    }
+
+    // Confirm that staying inside a vehicle at a stop does not inflate ride time
+    @Test
+    void timeExpandedGraphExcludesDwellTimeFromRideTime() {
+        Connection[] connections = {
+            new Connection(480, 0, 510, 1, 0),
+            new Connection(520, 1, 550, 2, 0)
+        };
+
+        TimeExpandedGraph graph = new TimeExpandedGraph(
+            connections,
+            3,
+            5
+        );
+
+        Leg leg = graph.leg(0, 2, 480);
+
+        assertEquals(true, leg.feasible());
+        assertEquals(480, leg.depart());
+        assertEquals(550, leg.arrival());
+        assertEquals(60, leg.ride());
+        assertEquals(10, leg.waiting());
+        assertEquals(0, leg.transfers());
     }
 }

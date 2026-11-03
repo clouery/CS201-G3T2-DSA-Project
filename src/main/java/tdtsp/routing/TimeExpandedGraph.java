@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Approach A: time-expanded event graph + Dijkstra (plan §5.3).
+ * Approach A: Time-Expanded Event Graph + Dijkstra (plan §5.3).
  *
- * <p>Every connection {@code i} gets three event nodes:
+ * Every connection {@code i} gets three event nodes:
  * <ul>
  *   <li>{@code dep(i)}: the vehicle leaves {@code from};</li>
  *   <li>{@code arr(i)}: the vehicle reaches {@code to};</li>
@@ -26,17 +26,17 @@ import java.util.PriorityQueue;
  * </ul>
  * The graph is a static DAG, so plain Dijkstra on it gives the earliest arrival.
  *
- * <p>Time: O((V' + E') log V') per query. Space: O(V' + E') with V' = 3C, E' &lt;= 5C.
+ * Time: O((V' + E') log V') per query. Space: O(V' + E') with V' = 3C, E' &lt;= 5C.
  */
 public class TimeExpandedGraph implements Router {
 
-    private final Connection[] conns;
-    private final int c;
+    private final Connection[] connections;
+    private final int numConnections;
     private final int numStops;
     /** Per stop: connection indices departing there, in departure order, and their times. */
-    private final int[][] stopDepartures;
-    private final int[][] stopDepartureTimes;
-    /** CSR adjacency over 3C nodes. */
+    private final int[][] departuresByStop;
+    private final int[][] departureTimesByStop;
+    /** Compressed Sparse Row (CSR) data structure that stores the graph's adjacency list using flat arrays */
     private final int[] offsets;
     private final int[] targets;
     private final int[] weights;
@@ -47,55 +47,55 @@ public class TimeExpandedGraph implements Router {
      * @param buffer      transfer buffer in minutes, not applied at the origin
      */
     public TimeExpandedGraph(Connection[] connections, int numStops, int buffer) {
-        this.conns = connections.clone();
-        Arrays.sort(this.conns, Comparator.comparingInt(Connection::depTime));
-        this.c = conns.length;
+        this.connections = connections.clone();
+        Arrays.sort(this.connections, Comparator.comparingInt(Connection::depTime));
+        this.numConnections = this.connections.length;
         this.numStops = numStops;
 
         List<List<Integer>> byStop = new ArrayList<>();
         for (int s = 0; s < numStops; s++) {
             byStop.add(new ArrayList<>());
         }
-        for (int i = 0; i < c; i++) {
-            byStop.get(conns[i].from()).add(i);
+        for (int i = 0; i < this.numConnections; i++) {
+            byStop.get(this.connections[i].from()).add(i);
         }
-        stopDepartures = new int[numStops][];
-        stopDepartureTimes = new int[numStops][];
+        this.departuresByStop = new int[numStops][];
+        this.departureTimesByStop = new int[numStops][];
         for (int s = 0; s < numStops; s++) {
-            stopDepartures[s] = byStop.get(s).stream().mapToInt(Integer::intValue).toArray();
-            stopDepartureTimes[s] = Arrays.stream(stopDepartures[s]).map(i -> conns[i].depTime()).toArray();
+            this.departuresByStop[s] = byStop.get(s).stream().mapToInt(Integer::intValue).toArray();
+            this.departureTimesByStop[s] = Arrays.stream(this.departuresByStop[s]).map(i -> this.connections[i].depTime()).toArray();
         }
 
-        int maxArcs = 5 * c;
+        int maxArcs = 5 * this.numConnections;
         int[] from = new int[maxArcs];
         int[] to = new int[maxArcs];
         int[] w = new int[maxArcs];
         int m = 0;
-        int numTrips = Arrays.stream(conns).mapToInt(Connection::tripId).max().orElse(-1) + 1;
+        int numTrips = Arrays.stream(this.connections).mapToInt(Connection::tripId).max().orElse(-1) + 1;
         int[] lastOfTrip = new int[numTrips];
         Arrays.fill(lastOfTrip, -1);
 
-        for (int i = 0; i < c; i++) {
-            Connection ci = conns[i];
+        for (int i = 0; i < numConnections; i++) {
+            Connection ci = this.connections[i];
             // travel
             from[m] = dep(i);
             to[m] = arr(i);
             w[m++] = ci.arrTime() - ci.depTime();
             // stay on board from the trip's previous connection
             int p = lastOfTrip[ci.tripId()];
-            if (p >= 0 && conns[p].to() == ci.from()) {
+            if (p >= 0 && this.connections[p].to() == ci.from()) {
                 from[m] = arr(p);
                 to[m] = dep(i);
-                w[m++] = ci.depTime() - conns[p].arrTime();
+                w[m++] = ci.depTime() - this.connections[p].arrTime();
             }
             lastOfTrip[ci.tripId()] = i;
             // transfer at the arrival stop
             int stop = ci.to();
-            int k = Timetable.nextDepartureIndex(stopDepartureTimes[stop], ci.arrTime() + buffer);
+            int k = Timetable.nextDepartureIndex(departureTimesByStop[stop], ci.arrTime() + buffer);
             if (k != Timetable.NONE) {
                 from[m] = arr(i);
-                to[m] = tr(stopDepartures[stop][k]);
-                w[m++] = stopDepartureTimes[stop][k] - ci.arrTime();
+                to[m] = tr(departuresByStop[stop][k]);
+                w[m++] = departureTimesByStop[stop][k] - ci.arrTime();
             }
             // board
             from[m] = tr(i);
@@ -103,14 +103,14 @@ public class TimeExpandedGraph implements Router {
             w[m++] = 0;
         }
         for (int s = 0; s < numStops; s++) {
-            for (int k = 0; k + 1 < stopDepartures[s].length; k++) {
-                from[m] = tr(stopDepartures[s][k]);
-                to[m] = tr(stopDepartures[s][k + 1]);
-                w[m++] = stopDepartureTimes[s][k + 1] - stopDepartureTimes[s][k];
+            for (int k = 0; k + 1 < departuresByStop[s].length; k++) {
+                from[m] = tr(departuresByStop[s][k]);
+                to[m] = tr(departuresByStop[s][k + 1]);
+                w[m++] = departureTimesByStop[s][k + 1] - departureTimesByStop[s][k];
             }
         }
 
-        int nodes = 3 * c;
+        int nodes = 3 * numConnections;
         offsets = new int[nodes + 1];
         for (int a = 0; a < m; a++) {
             offsets[from[a] + 1]++;
@@ -133,11 +133,11 @@ public class TimeExpandedGraph implements Router {
     }
 
     private int arr(int i) {
-        return c + i;
+        return numConnections + i;
     }
 
     private int tr(int i) {
-        return 2 * c + i;
+        return 2 * numConnections + i;
     }
 
     /** Earliest arrival at every stop when leaving {@code s} at {@code t0}. */
@@ -169,12 +169,15 @@ public class TimeExpandedGraph implements Router {
         int boardings = 1;
         for (int v = r.bestNode()[to]; r.parent()[v] >= 0; v = r.parent()[v]) {
             int p = r.parent()[v];
-            boolean parentIsArr = p >= c && p < 2 * c;
-            if (p < c && v >= c && v < 2 * c) {
+            boolean parentIsArr = p >= numConnections && p < 2 * numConnections;
+
+            // Vehicle ride: departure node -> arrival node
+            if (p < numConnections && v >= numConnections && v < 2 * numConnections) {
                 ride += r.dist()[v] - r.dist()[p];
-            } else if (parentIsArr && v < c) {
-                ride += r.dist()[v] - r.dist()[p];
-            } else if (parentIsArr && v >= 2 * c) {
+            }
+
+            // Transfer: arrival node -> traveller-ready node
+            else if (parentIsArr && v >= 2 * numConnections) {
                 boardings++;
             }
         }
@@ -183,7 +186,7 @@ public class TimeExpandedGraph implements Router {
 
     /** Dijkstra from the first departure at {@code s} at or after {@code t0}. */
     private Search search(int s, int t0, int target) {
-        int nodes = 3 * c;
+        int nodes = 3 * numConnections;
         int[] dist = new int[nodes];
         Arrays.fill(dist, INF);
         int[] parent = new int[nodes];
@@ -195,12 +198,12 @@ public class TimeExpandedGraph implements Router {
         bestTime[s] = t0;
         Search result = new Search(dist, parent, bestTime, bestNode);
 
-        int k = Timetable.nextDepartureIndex(stopDepartureTimes[s], t0);
+        int k = Timetable.nextDepartureIndex(departureTimesByStop[s], t0);
         if (target == s || k == Timetable.NONE) {
             return result;
         }
-        int source = tr(stopDepartures[s][k]);
-        dist[source] = stopDepartureTimes[s][k];
+        int source = tr(departuresByStop[s][k]);
+        dist[source] = departureTimesByStop[s][k];
 
         // Entries pack (time << 32 | node), so the natural long order is by time.
         PriorityQueue<Long> pq = new PriorityQueue<>();
@@ -212,8 +215,8 @@ public class TimeExpandedGraph implements Router {
             if (time > dist[u]) {
                 continue;
             }
-            if (u >= c && u < 2 * c) {
-                int stop = conns[u - c].to();
+            if (u >= numConnections && u < 2 * numConnections) {
+                int stop = connections[u - numConnections].to();
                 if (bestNode[stop] < 0 && stop != s) {
                     bestTime[stop] = time;
                     bestNode[stop] = u;
@@ -236,7 +239,7 @@ public class TimeExpandedGraph implements Router {
     }
 
     public int numNodes() {
-        return 3 * c;
+        return 3 * numConnections;
     }
 
     public int numArcs() {
@@ -246,8 +249,8 @@ public class TimeExpandedGraph implements Router {
     /** Estimated bytes of the preprocessed structure (CSR arrays, per-stop departures, connections). */
     public long structureBytes() {
         return 4L * (offsets.length + targets.length + weights.length)
-                + 8L * c + 16L * 2 * numStops
-                + 40L * c;
+                + 8L * numConnections + 16L * 2 * numStops
+                + 40L * numConnections;
     }
 
     private record Search(int[] dist, int[] parent, int[] bestTime, int[] bestNode) {
