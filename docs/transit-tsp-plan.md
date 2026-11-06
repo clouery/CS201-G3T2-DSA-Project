@@ -155,11 +155,11 @@ In a general timetable they do not coincide.
 
 ## 3. Locked scope
 
-> **Summary:** The scope is deliberately small: 30 cities (10/20/30/40 for scalability), one node per city, 8–12 lines, fixed headways, a 5-minute transfer buffer, and two approaches (time-expanded + Dijkstra vs time-dependent + CSA). RAPTOR, real GTFS, real-time delays, and a polished UI are out of scope.
+> **Summary:** The scope is deliberately small: 40 cities (10/20/30/40 for scalability), one node per city, 8–12 lines, fixed headways, a 5-minute transfer buffer, and two approaches (time-expanded + Dijkstra vs time-dependent + CSA). RAPTOR, real GTFS, real-time delays, and a polished UI are out of scope.
 
 ### In scope
 
-- **30 cities** for the main experiments (10/20/30/40 for scalability).
+- **40 cities** for the main experiments (10/20/30/40 for scalability; the main instance is the 40-city set).
 - **One node per city** (documented abstraction).
 - **8–12 lines**, each with 4–8 stops; every selected city is on at least one line.
 - **Headways:** bus 30 min, train 60 min; service 06:00–22:00.
@@ -190,7 +190,7 @@ If the time-expanded graph is not ready by the end of day 8, drop it and use **t
 
 ## 4. Data plan
 
-> **Summary:** GeoNames supplies only city nodes — no edges, lines, or timetables. The pipeline cleans `MY.txt`, selects the top 30 cities by population, builds a connected geometric graph and 8–12 lines, generates headway-based schedules, and emits GTFS-like CSVs. Every fabricated attribute must be documented.
+> **Summary:** GeoNames supplies only city nodes — no edges, lines, or timetables. The pipeline cleans `MY.txt`, selects the top 40 cities by population, builds a connected geometric graph and 8–12 lines, generates headway-based schedules, and emits GTFS-like CSVs. Every fabricated attribute must be documented.
 
 ### 4.1 GeoNames facts
 
@@ -214,10 +214,14 @@ GeoNames supplies **nodes, not a network**.
 ### 4.3 City selection
 
 - Use `P/PPL`, `P/PPLA`, `P/PPLC` with population > 0.
-- Select the **top 30 by population** for the main instance.
+- Select the **top 40 by population** for the main instance.
 - Keep the full ordered list so the scalability experiment can take the top 10/20/30/40.
 - If a selected city is geometrically isolated, add the nearest non-zero-population city to keep the network connected.
 - Document: records selected, columns used, filter rationale, subset justification.
+
+**Subset justification.** Forty populated places are sufficient for this project because the instance must satisfy four requirements at once: demand coverage, a valid network under the locked design, non-degenerate results for all four research questions, and reproducibility. The 40 places contain 19.12M of the 36.90M cleaned urban population (51.8%) and cover 13 state-level units, including Sabah, Sarawak, Penang, and the Klang Valley, so every major corridor and both halves of the country are represented. Under the locked 8–12 line, 4–8 stop design, the generator produces a valid 40-city instance: 11 lines (6 bus, 5 train), 566 trips, all 40 cities covered, and a connected service network. At this size the two representations are clearly distinguishable (CSA 4.3 µs vs time-expanded 106 µs per query; 1.9 MB vs 4.3 MB), the tour heuristics have room to matter (nearest-neighbour 97.6 h vs 79.4 h after local search), and a full tour uses only ~24–29% of the 14-day horizon with zero infeasible legs. It is also the largest size at which the locked design remains valid across the full five-seed protocol; larger instances would not change the qualitative answers to RQ1–RQ4, only add cost.
+
+The scalability ladder remains **10/20/30/40** rather than extending to 60 or 80: with 10 base lines plus at most 2 repair lines of 4–8 stops, the generator reliably covers at most about 40 places. Runs at 45–50 places are seed-dependent (several seeds fail validation), and 55 or more fail for every seed tested, even with 12 lines. The main instance uses seed 43 because seed 42 produces a disconnected service-line network at 40 cities.
 
 ### 4.4 Network generation
 
@@ -239,7 +243,7 @@ GeoNames supplies **nodes, not a network**.
 - Optional peak frequency (e.g. 15 min for bus 07:00–09:00 and 17:00–19:00) — only if time permits.
 - Expand each line into concrete trips: for each departure slot, create a trip with stop times at each stop.
 - Ensure no trip overlaps itself and all times are monotonically increasing.
-- **Multi-day horizon (experiments):** a 30-city tour takes several days, so the routers repeat the one-day timetable for `days` consecutive days (day `d` shifted by `d × 1440` minutes, with its own trip ids). Set per experiment in `experiments/*/config.properties` (default 14).
+- **Multi-day horizon (experiments):** a 40-city tour takes several days, so the routers repeat the one-day timetable for `days` consecutive days (day `d` shifted by `d × 1440` minutes, with its own trip ids). Set per experiment in `experiments/*/config.properties` (default 14).
 
 ### 4.6 GTFS-like schema
 
@@ -262,7 +266,7 @@ Write a dedicated report section covering:
 - [ ] Records selected (counts and criteria).
 - [ ] Columns used and why.
 - [ ] Filtering/preprocessing steps.
-- [ ] Subset justification (top 30 by population).
+- [ ] Subset justification (top 40 by population; see §4.3, including why 90% coverage is infeasible).
 - [ ] Every fabricated attribute: lines, modes, speeds, headways, first/last departures, transfer buffer.
 - [ ] Derived attributes (distance, travel time, trip times).
 - [ ] Random seeds and generation script.
@@ -284,7 +288,7 @@ Write a dedicated report section covering:
 - Time-expanded DAG for Approach A.
 - Memoisation table for leg results keyed by `(from, to, departure_time)` during tour construction.
 
-**Why adjacency list, not a matrix.** The transit graph is sparse: each city is on a few lines, so `E = O(V)`. A matrix would waste `O(V²)` space and cannot naturally hold a sorted departure array per directed edge. Dijkstra and CSA iterate over neighbours, not random pairs, so the adjacency list is the right fit. The classic baseline uses a dense distance matrix because its graph is complete — that contrast is worth reporting. At `V = 30` the memory difference is negligible, but the list matches the problem structure and scales to the time-expanded graph.
+**Why adjacency list, not a matrix.** The transit graph is sparse: each city is on a few lines, so `E = O(V)`. A matrix would waste `O(V²)` space and cannot naturally hold a sorted departure array per directed edge. Dijkstra and CSA iterate over neighbours, not random pairs, so the adjacency list is the right fit. The classic baseline uses a dense distance matrix because its graph is complete — that contrast is worth reporting. At `V = 40` the memory difference is negligible, but the list matches the problem structure and scales to the time-expanded graph.
 
 ### 5.2 Classic baseline (not one of the two approaches)
 
@@ -326,7 +330,7 @@ Complexity: sorting `O(C log C)` once; query `O(C)`; space `O(C + V)`.
 
 - **Nearest-neighbour:** from the current city and time, evaluate the earliest arrival to every unvisited city; pick the earliest; repeat.
 - **Insertion / 2-opt:** improve the tour by re-evaluating affected legs.
-- **Important:** with time-dependent, asymmetric costs, the standard 2-opt cost delta is invalid. Re-evaluate the full tour (or the affected suffix) after each move. For 30 cities this is affordable.
+- **Important:** with time-dependent, asymmetric costs, the standard 2-opt cost delta is invalid. Re-evaluate the full tour (or the affected suffix) after each move. For 40 cities this is affordable.
 - **Infeasible legs:** assign a large penalty and keep the tour; report infeasibility rather than crashing.
 - **Optimality:** the tour is heuristic. The project does not require a mathematically optimal TSP tour; the time-dependent Dijkstra is optimal only for a single leg.
 
@@ -606,7 +610,7 @@ Assuming ~15 days (2+ weeks). Adjust to the actual calendar.
 | Day | Work                                                                           |
 | --- | ------------------------------------------------------------------------------ |
 | 1   | Lock variant and scope; create repo skeleton; set up Maven + JUnit; write README stub |
-| 2   | Clean `MY.txt`; select top 30 cities; document data decisions                  |
+| 2   | Clean `MY.txt`; select top 40 cities; document data decisions                  |
 | 3   | Build geometric graph, MST connectivity, lines, coverage                       |
 | 4   | Generate schedules; emit GTFS-like CSVs; validate monotonic times              |
 | 5   | Build loaders; toy network; unit tests for parsing and `next_departure`        |

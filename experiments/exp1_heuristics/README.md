@@ -15,7 +15,7 @@ java -cp target/classes tdtsp.experiment.ExperimentMain exp1_heuristics
 
 ```properties
 # RQ1 - heuristic gap: min-wait / min-ride vs min-arrival, varying the headway.
-cities=30
+cities=40
 headways=15,30,60,120
 buffer=5
 # Random single-leg queries per instance.
@@ -41,18 +41,18 @@ startTime=480
 
 | headway | mode | pct_optimal_mean | mean_gap_min_mean | max_gap_min_mean | mean_wait_min_mean | mean_ride_min_mean | tour_elapsed_h_mean | tour_infeasible_legs_mean |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 15 | min_arrival | 100.000 | 0.000 | 0.000 | 104.971 | 513.644 | 77.333 | 0.000 |
-| 15 | min_wait | 46.600 | 135.429 | 1256.200 | 87.586 | 666.458 | 79.373 | 0.000 |
-| 15 | min_ride | 61.400 | 98.506 | 1065.200 | 221.400 | 495.721 | 83.807 | 0.000 |
-| 30 | min_arrival | 100.000 | 0.000 | 0.000 | 131.530 | 514.969 | 69.487 | 0.000 |
-| 30 | min_wait | 47.900 | 138.681 | 1410.000 | 107.186 | 677.994 | 89.870 | 0.000 |
-| 30 | min_ride | 60.700 | 103.495 | 1044.600 | 254.273 | 495.721 | 77.510 | 0.000 |
-| 60 | min_arrival | 100.000 | 0.000 | 0.000 | 173.384 | 522.360 | 85.907 | 0.000 |
-| 60 | min_wait | 55.100 | 146.745 | 1782.000 | 142.534 | 699.955 | 101.570 | 0.000 |
-| 60 | min_ride | 54.700 | 119.035 | 1005.200 | 319.058 | 495.721 | 88.313 | 0.000 |
-| 120 | min_arrival | 100.000 | 0.000 | 0.000 | 247.089 | 535.165 | 90.220 | 0.000 |
-| 120 | min_wait | 65.300 | 136.369 | 1713.600 | 225.579 | 693.044 | 104.160 | 0.000 |
-| 120 | min_ride | 52.100 | 156.521 | 1070.400 | 443.054 | 495.721 | 104.787 | 0.000 |
+| 15 | min_arrival | 100.000 | 0.000 | 0.000 | 130.294 | 569.392 | 90.093 | 0.000 |
+| 15 | min_wait | 54.000 | 123.523 | 1360.000 | 126.414 | 696.795 | 100.190 | 0.000 |
+| 15 | min_ride | 86.000 | 18.756 | 560.200 | 162.048 | 556.394 | 93.283 | 0.000 |
+| 30 | min_arrival | 100.000 | 0.000 | 0.000 | 152.866 | 571.083 | 97.583 | 0.000 |
+| 30 | min_wait | 59.800 | 134.685 | 1524.000 | 150.899 | 707.735 | 103.813 | 0.000 |
+| 30 | min_ride | 82.600 | 21.938 | 516.000 | 189.493 | 556.394 | 96.263 | 0.000 |
+| 60 | min_arrival | 100.000 | 0.000 | 0.000 | 201.220 | 579.030 | 109.040 | 0.000 |
+| 60 | min_wait | 57.100 | 131.609 | 1458.000 | 190.023 | 721.836 | 104.750 | 0.000 |
+| 60 | min_ride | 78.300 | 32.827 | 533.800 | 256.683 | 556.394 | 107.803 | 0.000 |
+| 120 | min_arrival | 100.000 | 0.000 | 0.000 | 281.173 | 588.416 | 117.383 | 0.000 |
+| 120 | min_wait | 66.600 | 115.019 | 1419.200 | 259.876 | 724.732 | 119.137 | 0.000 |
+| 120 | min_ride | 73.900 | 53.926 | 693.400 | 367.121 | 556.394 | 118.393 | 0.000 |
 
 ![gap vs headway](plots/gap_vs_headway.svg)
 
@@ -69,4 +69,11 @@ startTime=480
 - `gap` = heuristic arrival minus earliest arrival for the same query, over queries where min-arrival is feasible. `failed` counts queries where the heuristic found no journey.
 - Min-wait and min-ride are label-setting heuristics on (stop, trip) states ordered by waiting or riding time (plan §5.5); they are not exact optimisers of their own cost.
 - min_arrival legs use CSA; its waiting/riding columns describe the earliest-arrival journey.
+
+### Seed substitutions
+
+- cities=40, headway=15/30, buffer=5: seed 2 failed in the generator, network seed 1002 used
+- cities=40, headway=30/60, buffer=5: seed 2 failed in the generator, network seed 1002 used
+- cities=40, headway=60/120, buffer=5: seed 2 failed in the generator, network seed 1002 used
+- cities=40, headway=120/240, buffer=5: seed 2 failed in the generator, network seed 1002 used
 

@@ -13,7 +13,7 @@ import tdtsp.network.Csv;
 /**
  * Timetable loaded from the GTFS-like CSVs in {@code data/gtfs/} (plan §4.6).
  *
- * <p>The generated timetable covers one service day. A tour of 30 cities takes
+ * <p>The generated timetable covers one service day. A tour of 40 cities takes
  * several days, so the day is repeated {@code days} times: day {@code d} is the
  * same timetable shifted by {@code d * 1440} minutes, with its own trip ids.
  */

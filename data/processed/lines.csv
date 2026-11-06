@@ -1,60 +1,68 @@
 line_id,route_id,mode,name,stop_sequence,stop_id,stop_name,distance_from_prev_km,travel_min_from_prev
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,1,1734634,Ipoh,0.000000,0
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,2,1734705,Kuala Terengganu,242.597289,146
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,3,1736376,Kota Bharu,132.826621,80
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,4,1735498,Sungai Petani,201.287583,121
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,5,1736309,Alor Setar,54.567157,33
-L01,R01,train,Line 01: Ipoh -> Kota Kuala Muda,6,6847550,Kota Kuala Muda,59.258806,36
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,1,1735227,Kuantan,0.000000,0
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,2,1734705,Kuala Terengganu,170.534454,103
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,3,1736376,Kota Bharu,132.826621,80
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,4,1735498,Sungai Petani,201.287583,121
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,5,1734634,Ipoh,135.328066,82
-L02,R02,train,Line 02: Kuantan -> Bukit Rahman Putra,6,13118225,Bukit Rahman Putra,160.965962,97
-L03,R03,bus,Line 03: Kota Damansara -> Setapak,1,12514556,Kota Damansara,0.000000,0
-L03,R03,bus,Line 03: Kota Damansara -> Setapak,2,13118225,Bukit Rahman Putra,7.300890,8
-L03,R03,bus,Line 03: Kota Damansara -> Setapak,3,12557764,Taman Petaling,10.087231,11
-L03,R03,bus,Line 03: Kota Damansara -> Setapak,4,7795834,Selayang Baru Utara,6.478023,7
-L03,R03,bus,Line 03: Kota Damansara -> Setapak,5,1735162,Setapak,8.546076,9
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,1,1749822,Puchong,0.000000,0
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,2,12514556,Kota Damansara,17.654258,18
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,3,13118225,Bukit Rahman Putra,7.300890,8
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,4,7795834,Selayang Baru Utara,12.489644,13
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,5,1735227,Kuantan,194.132284,195
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,6,1734705,Kuala Terengganu,170.534454,171
-L04,R04,bus,Line 04: Puchong -> Kota Bharu,7,1736376,Kota Bharu,132.826621,133
-L05,R05,bus,Line 05: Kampung Baru Subang -> Puchong,1,1771023,Kampung Baru Subang,0.000000,0
-L05,R05,bus,Line 05: Kampung Baru Subang -> Puchong,2,12514556,Kota Damansara,5.230467,6
-L05,R05,bus,Line 05: Kampung Baru Subang -> Puchong,3,1732903,Shah Alam,9.347751,10
-L05,R05,bus,Line 05: Kampung Baru Subang -> Puchong,4,1749822,Puchong,13.273540,14
-L06,R06,bus,Line 06: Seremban -> Kota Damansara,1,1734810,Seremban,0.000000,0
-L06,R06,bus,Line 06: Seremban -> Kota Damansara,2,1749822,Puchong,46.664993,47
-L06,R06,bus,Line 06: Seremban -> Kota Damansara,3,1735161,Kuala Lumpur,17.512379,18
-L06,R06,bus,Line 06: Seremban -> Kota Damansara,4,12557764,Taman Petaling,7.624880,8
-L06,R06,bus,Line 06: Seremban -> Kota Damansara,5,12514556,Kota Damansara,9.183943,10
-L07,R07,bus,Line 07: Malacca -> Puchong,1,1734759,Malacca,0.000000,0
-L07,R07,bus,Line 07: Malacca -> Puchong,2,1734810,Seremban,68.193680,69
-L07,R07,bus,Line 07: Malacca -> Puchong,3,1735162,Setapak,58.019835,59
-L07,R07,bus,Line 07: Malacca -> Puchong,4,1735161,Kuala Lumpur,8.586132,9
-L07,R07,bus,Line 07: Malacca -> Puchong,5,1749822,Puchong,17.512379,18
-L08,R08,bus,Line 08: Kluang -> Shah Alam,1,1732811,Kluang,0.000000,0
-L08,R08,bus,Line 08: Kluang -> Shah Alam,2,1734759,Malacca,121.015945,122
-L08,R08,bus,Line 08: Kluang -> Shah Alam,3,1749822,Puchong,113.111900,114
-L08,R08,bus,Line 08: Kluang -> Shah Alam,4,1732903,Shah Alam,13.273540,14
-L09,R09,bus,Line 09: Kampung Kangkar Teberau -> Pelentong,1,1762110,Kampung Kangkar Teberau,0.000000,0
-L09,R09,bus,Line 09: Kampung Kangkar Teberau -> Pelentong,2,1732811,Kluang,73.769246,74
-L09,R09,bus,Line 09: Kampung Kangkar Teberau -> Pelentong,3,12750654,Mukim Pulai,67.579282,68
-L09,R09,bus,Line 09: Kampung Kangkar Teberau -> Pelentong,4,1732724,Kampung Larkin Lama,9.258216,10
-L09,R09,bus,Line 09: Kampung Kangkar Teberau -> Pelentong,5,1732747,Pelentong,9.219907,10
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,1,10063567,Iskandar Puteri,0.000000,0
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,2,1732752,Johor Bahru,16.981208,11
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,3,1732724,Kampung Larkin Lama,4.380468,3
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,4,1762110,Kampung Kangkar Teberau,3.507296,3
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,5,1732722,Pasir Gudang,18.441200,12
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,6,1735634,Kuching,714.585086,429
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,7,1733432,Kota Kinabalu,804.596141,483
-L10,R10,train,Line 10: Iskandar Puteri -> Sandakan,8,1734052,Sandakan,226.736686,137
-L11,R11,train,Line 11: Sandakan -> Kuching,1,1734052,Sandakan,0.000000,0
-L11,R11,train,Line 11: Sandakan -> Kuching,2,1734199,Tawau,179.167412,108
-L11,R11,train,Line 11: Sandakan -> Kuching,3,1733432,Kota Kinabalu,278.532704,168
-L11,R11,train,Line 11: Sandakan -> Kuching,4,1735634,Kuching,804.596141,483
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,1,6847550,Kota Kuala Muda,0.000000,0
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,2,1736309,Alor Setar,59.258806,36
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,3,13100478,Paya Terubong,83.677195,51
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,4,1735498,Sungai Petani,38.206742,23
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,5,1736376,Kota Bharu,201.287583,121
+L01,R01,train,Line 01: Kota Kuala Muda -> Kuala Terengganu,6,1734705,Kuala Terengganu,132.826621,80
+L02,R02,train,Line 02: Ipoh -> Kota Bharu,1,1734634,Ipoh,0.000000,0
+L02,R02,train,Line 02: Ipoh -> Kota Bharu,2,1735498,Sungai Petani,135.328066,82
+L02,R02,train,Line 02: Ipoh -> Kota Bharu,3,1736309,Alor Setar,54.567157,33
+L02,R02,train,Line 02: Ipoh -> Kota Bharu,4,1736376,Kota Bharu,208.207224,125
+L03,R03,train,Line 03: Teluk Intan -> Malacca,1,1735459,Teluk Intan,0.000000,0
+L03,R03,train,Line 03: Teluk Intan -> Malacca,2,1734634,Ipoh,62.859535,38
+L03,R03,train,Line 03: Teluk Intan -> Malacca,3,1734705,Kuala Terengganu,242.597289,146
+L03,R03,train,Line 03: Teluk Intan -> Malacca,4,1735227,Kuantan,170.534454,103
+L03,R03,train,Line 03: Teluk Intan -> Malacca,5,10941913,Kajang,193.124369,116
+L03,R03,train,Line 03: Teluk Intan -> Malacca,6,1734810,Seremban,33.769488,21
+L03,R03,train,Line 03: Teluk Intan -> Malacca,7,1734759,Malacca,68.193680,41
+L04,R04,bus,Line 04: Muar -> Taman Petaling,1,1732869,Muar,0.000000,0
+L04,R04,bus,Line 04: Muar -> Taman Petaling,2,1734810,Seremban,103.544290,104
+L04,R04,bus,Line 04: Muar -> Taman Petaling,3,1735161,Kuala Lumpur,53.610960,54
+L04,R04,bus,Line 04: Muar -> Taman Petaling,4,12557764,Taman Petaling,7.624880,8
+L05,R05,bus,Line 05: Kapar -> Klang,1,1732901,Kapar,0.000000,0
+L05,R05,bus,Line 05: Kapar -> Klang,2,1735459,Teluk Intan,106.710436,107
+L05,R05,bus,Line 05: Kapar -> Klang,3,13118225,Bukit Rahman Putra,107.709917,108
+L05,R05,bus,Line 05: Kapar -> Klang,4,1735153,Sungai Buloh,0.808693,1
+L05,R05,bus,Line 05: Kapar -> Klang,5,12514556,Kota Damansara,6.525628,7
+L05,R05,bus,Line 05: Kapar -> Klang,6,1771023,Kampung Baru Subang,5.230467,6
+L05,R05,bus,Line 05: Kapar -> Klang,7,1732903,Shah Alam,7.220127,8
+L05,R05,bus,Line 05: Kapar -> Klang,8,1732905,Klang,11.299522,12
+L06,R06,bus,Line 06: Batu Caves -> Malacca,1,1735166,Batu Caves,0.000000,0
+L06,R06,bus,Line 06: Batu Caves -> Malacca,2,1735161,Kuala Lumpur,10.775427,11
+L06,R06,bus,Line 06: Batu Caves -> Malacca,3,12557764,Taman Petaling,7.624880,8
+L06,R06,bus,Line 06: Batu Caves -> Malacca,4,7795834,Selayang Baru Utara,6.478023,7
+L06,R06,bus,Line 06: Batu Caves -> Malacca,5,1735162,Setapak,8.546076,9
+L06,R06,bus,Line 06: Batu Caves -> Malacca,6,10941913,Kajang,24.631334,25
+L06,R06,bus,Line 06: Batu Caves -> Malacca,7,1734759,Malacca,101.963128,102
+L07,R07,bus,Line 07: Puchong -> Batu Caves,1,1749822,Puchong,0.000000,0
+L07,R07,bus,Line 07: Puchong -> Batu Caves,2,10941913,Kajang,19.119008,20
+L07,R07,bus,Line 07: Puchong -> Batu Caves,3,1735227,Kuantan,193.124369,194
+L07,R07,bus,Line 07: Puchong -> Batu Caves,4,1735162,Setapak,189.620976,190
+L07,R07,bus,Line 07: Puchong -> Batu Caves,5,1735166,Batu Caves,6.069664,7
+L08,R08,bus,Line 08: Kluang -> Setapak,1,1732811,Kluang,0.000000,0
+L08,R08,bus,Line 08: Kluang -> Setapak,2,1732869,Muar,83.134272,84
+L08,R08,bus,Line 08: Kluang -> Setapak,3,1734759,Malacca,40.206231,41
+L08,R08,bus,Line 08: Kluang -> Setapak,4,10941913,Kajang,101.963128,102
+L08,R08,bus,Line 08: Kluang -> Setapak,5,1735227,Kuantan,193.124369,194
+L08,R08,bus,Line 08: Kluang -> Setapak,6,1735162,Setapak,189.620976,190
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,1,10063567,Iskandar Puteri,0.000000,0
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,2,12750654,Mukim Pulai,16.308903,17
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,3,1732811,Kluang,67.579282,68
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,4,1732869,Muar,83.134272,84
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,5,1734759,Malacca,40.206231,41
+L09,R09,bus,Line 09: Iskandar Puteri -> Kajang,6,10941913,Kajang,101.963128,102
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,1,1732724,Kampung Larkin Lama,0.000000,0
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,2,1732811,Kluang,75.505937,46
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,3,1762110,Kampung Kangkar Teberau,73.769246,45
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,4,12750654,Mukim Pulai,9.808347,6
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,5,1732752,Johor Bahru,12.629284,8
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,6,1732747,Pelentong,9.843684,6
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,7,1732722,Pasir Gudang,11.386773,7
+L10,R10,train,Line 10: Kampung Larkin Lama -> Kuching,8,1735634,Kuching,714.585086,429
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,1,13118272,Bandar Seri Alam,0.000000,0
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,2,1735634,Kuching,717.869317,431
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,3,1738050,Miri,515.143290,310
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,4,1733432,Kota Kinabalu,289.460088,174
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,5,1734052,Sandakan,226.736686,137
+L11,R11,train,Line 11: Bandar Seri Alam -> Tawau,6,1734199,Tawau,179.167412,108

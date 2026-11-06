@@ -1,7 +1,7 @@
 route_id,mode,name
 R01,train,Line 01
 R02,train,Line 02
-R03,bus,Line 03
+R03,train,Line 03
 R04,bus,Line 04
 R05,bus,Line 05
 R06,bus,Line 06

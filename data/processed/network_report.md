@@ -1,7 +1,7 @@
 # Network and schedule generation report
 
-- Input: `cities_top30.csv` (30 cities)
-- Seed: `42`
+- Input: `cities_top40.csv` (40 cities)
+- Seed: `43`
 - k-nearest neighbours: `3`
 - Lines: target `10`, actual `11` (4-8 stops each; 8-12 allowed)
 - Mode threshold: `200.0 km` on the line's longest segment
@@ -22,31 +22,31 @@
 
 | Item | Value |
 |---|---|
-| Cities | 30 |
-| Graph edges | 64 (64 kNN, 0 MST) |
-| Lines | 11 (7 bus, 4 train) |
-| Trips | 598 |
-| Stop times | 3126 |
-| Transfers | 30 |
-| Trips arriving after 24:00 | 124 |
+| Cities | 40 |
+| Graph edges | 83 (82 kNN, 1 MST) |
+| Lines | 11 (6 bus, 5 train) |
+| Trips | 566 |
+| Stop times | 3430 |
+| Transfers | 40 |
+| Trips arriving after 24:00 | 160 |
 
-MST repair added 0 edge(s) to make the graph connected.
+MST repair added 1 edge(s) to make the graph connected.
 
 ## Lines
 
 | Line | Mode | Stops | Longest segment (km) | One-way (min) |
 |---|---|---|---|---|
-| L01 | train | 6 | 242.597 | 416 |
-| L02 | train | 6 | 201.288 | 483 |
-| L03 | bus | 5 | 10.087 | 35 |
-| L04 | bus | 7 | 194.132 | 538 |
-| L05 | bus | 4 | 13.274 | 30 |
-| L06 | bus | 5 | 46.665 | 83 |
-| L07 | bus | 5 | 68.194 | 155 |
-| L08 | bus | 4 | 121.016 | 250 |
-| L09 | bus | 5 | 73.769 | 162 |
-| L10 | train | 8 | 804.596 | 1078 |
-| L11 | train | 4 | 804.596 | 759 |
+| L01 | train | 6 | 201.288 | 311 |
+| L02 | train | 4 | 208.207 | 240 |
+| L03 | train | 7 | 242.597 | 465 |
+| L04 | bus | 4 | 103.544 | 166 |
+| L05 | bus | 8 | 107.710 | 249 |
+| L06 | bus | 7 | 101.963 | 162 |
+| L07 | bus | 5 | 193.124 | 411 |
+| L08 | bus | 6 | 193.124 | 611 |
+| L09 | bus | 6 | 101.963 | 312 |
+| L10 | train | 8 | 714.585 | 547 |
+| L11 | train | 6 | 717.869 | 1160 |
 
 ## Validation
 
@@ -63,5 +63,5 @@ MST repair added 0 edge(s) to make the graph connected.
 - The network is synthetic: GeoNames supplies nodes only, so lines, modes, speeds and headways are fabricated and documented here.
 - One node per city; Klang Valley and Johor Bahru suburbs are distinct stops a few kilometres apart.
 - The k-NN/MST graph may add long cross-sea edges to connect Borneo to the peninsula; rail across the South China Sea is a geometric abstraction, not a real route.
-- 124 trips arrive after 24:00; times are integer minutes from 00:00 and may exceed 1440, as allowed by the plan.
+- 160 trips arrive after 24:00; times are integer minutes from 00:00 and may exceed 1440, as allowed by the plan.
 - Transfers are same-stop only with a fixed 5-minute buffer; there are no walking links.
