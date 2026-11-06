@@ -234,7 +234,7 @@ The scalability ladder remains **10/20/30/40** rather than extending to 60 or 80
    - train otherwise.
 6. **Travel time:** `distance / speed`, with bus ≈ 60 km/h, train ≈ 100 km/h. Travel times are fully deterministic and reproducible.
 7. **Direction:** each line runs in both directions with the same segment times (or separate directional trips; document).
-8. **Seed:** every random choice uses a fixed seed stored in `config.properties` (read with `java.util.Properties`; all randomness goes through one seeded `java.util.Random`).
+8. **Seed:** every random choice in network generation uses one fixed integer seed stored in `config.properties` (read with `java.util.Properties`; all randomness goes through a single `java.util.Random(seed)`). The seed controls the line-generation random walks — which city starts each line, which neighbour is visited next, the target line length, and the coverage-repair choices — and therefore the resulting line set and timetable. It does not affect headways, speeds, service hours, or the transfer buffer, which are fixed by the other config keys. The main 40-city instance uses `seed=43`; `seed=42` fails validation with a disconnected service-line network, and 43 is the first seed that yields a connected network covering all 40 cities. The experiment folders use their own `seeds=1,2,3,4,5` to generate five independent networks per configuration; those are network seeds too, not the main-instance seed. Same seed plus same config reproduces the same network, schedule, and CSVs.
 
 ### 4.5 Schedule generation
 
