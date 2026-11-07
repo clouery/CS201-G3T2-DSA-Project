@@ -419,7 +419,7 @@ function nn_tour(cities, s, t0, router):
 - Headways: `{15, 30, 60, 120}` minutes.
 - Transfer buffer: `{0, 5, 10}` minutes (report `δ = 5` as the main setting; `0` is a stress test).
 - Seeds: `{1, 2, 3, 4, 5}`.
-- Main configuration: `n = 30`, bus headway 30, train headway 60, `δ = 5`.
+- Main configuration: `n = 40`, bus headway 30, train headway 60, `δ = 5`.
 
 ### Metrics
 
