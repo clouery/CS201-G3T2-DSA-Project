@@ -22,16 +22,16 @@
 <text x="593.0" y="376" text-anchor="middle" font-size="12" fill="#374151">10</text>
 <text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Transfer buffer (min)</text>
 <text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Build time (ms)</text>
-<path d="M181.0,114.9 L387.0,116.0 L593.0,113.0" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-<circle cx="181.0" cy="114.9" r="4" fill="#2563eb"/>
-<circle cx="387.0" cy="116.0" r="4" fill="#2563eb"/>
-<circle cx="593.0" cy="113.0" r="4" fill="#2563eb"/>
-<path d="M181.0,256.4 L387.0,258.1 L593.0,256.9" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<circle cx="181.0" cy="256.4" r="4" fill="#dc2626"/>
-<circle cx="387.0" cy="258.1" r="4" fill="#dc2626"/>
-<circle cx="593.0" cy="256.9" r="4" fill="#dc2626"/>
-<path d="M181.0,302.8 L387.0,305.4 L593.0,304.7" fill="none" stroke="#16a34a" stroke-width="2.5"/>
-<circle cx="181.0" cy="302.8" r="4" fill="#16a34a"/>
-<circle cx="387.0" cy="305.4" r="4" fill="#16a34a"/>
-<circle cx="593.0" cy="304.7" r="4" fill="#16a34a"/>
+<path d="M181.0,92.8 L387.0,94.3 L593.0,76.5" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="181.0" cy="92.8" r="4" fill="#2563eb"/>
+<circle cx="387.0" cy="94.3" r="4" fill="#2563eb"/>
+<circle cx="593.0" cy="76.5" r="4" fill="#2563eb"/>
+<path d="M181.0,245.4 L387.0,248.0 L593.0,239.4" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="181.0" cy="245.4" r="4" fill="#dc2626"/>
+<circle cx="387.0" cy="248.0" r="4" fill="#dc2626"/>
+<circle cx="593.0" cy="239.4" r="4" fill="#dc2626"/>
+<path d="M181.0,286.1 L387.0,288.8 L593.0,288.8" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="181.0" cy="286.1" r="4" fill="#16a34a"/>
+<circle cx="387.0" cy="288.8" r="4" fill="#16a34a"/>
+<circle cx="593.0" cy="288.8" r="4" fill="#16a34a"/>
 </svg>

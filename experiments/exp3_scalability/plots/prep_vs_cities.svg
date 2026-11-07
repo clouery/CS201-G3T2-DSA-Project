@@ -23,19 +23,19 @@
 <text x="618.8" y="376" text-anchor="middle" font-size="12" fill="#374151">40</text>
 <text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Cities (n)</text>
 <text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Build time (ms)</text>
-<path d="M155.3,189.2 L309.8,194.8 L464.3,162.0 L618.8,116.0" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-<circle cx="155.3" cy="189.2" r="4" fill="#2563eb"/>
-<circle cx="309.8" cy="194.8" r="4" fill="#2563eb"/>
-<circle cx="464.3" cy="162.0" r="4" fill="#2563eb"/>
-<circle cx="618.8" cy="116.0" r="4" fill="#2563eb"/>
-<path d="M155.3,284.3 L309.8,292.5 L464.3,273.9 L618.8,258.1" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<circle cx="155.3" cy="284.3" r="4" fill="#dc2626"/>
-<circle cx="309.8" cy="292.5" r="4" fill="#dc2626"/>
-<circle cx="464.3" cy="273.9" r="4" fill="#dc2626"/>
-<circle cx="618.8" cy="258.1" r="4" fill="#dc2626"/>
-<path d="M155.3,320.2 L309.8,323.2 L464.3,315.2 L618.8,305.4" fill="none" stroke="#16a34a" stroke-width="2.5"/>
-<circle cx="155.3" cy="320.2" r="4" fill="#16a34a"/>
-<circle cx="309.8" cy="323.2" r="4" fill="#16a34a"/>
-<circle cx="464.3" cy="315.2" r="4" fill="#16a34a"/>
-<circle cx="618.8" cy="305.4" r="4" fill="#16a34a"/>
+<path d="M155.3,180.4 L309.8,185.7 L464.3,141.3 L618.8,94.3" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="155.3" cy="180.4" r="4" fill="#2563eb"/>
+<circle cx="309.8" cy="185.7" r="4" fill="#2563eb"/>
+<circle cx="464.3" cy="141.3" r="4" fill="#2563eb"/>
+<circle cx="618.8" cy="94.3" r="4" fill="#2563eb"/>
+<path d="M155.3,280.2 L309.8,284.5 L464.3,265.3 L618.8,248.0" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="155.3" cy="280.2" r="4" fill="#dc2626"/>
+<circle cx="309.8" cy="284.5" r="4" fill="#dc2626"/>
+<circle cx="464.3" cy="265.3" r="4" fill="#dc2626"/>
+<circle cx="618.8" cy="248.0" r="4" fill="#dc2626"/>
+<path d="M155.3,319.3 L309.8,320.6 L464.3,302.8 L618.8,288.8" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="155.3" cy="319.3" r="4" fill="#16a34a"/>
+<circle cx="309.8" cy="320.6" r="4" fill="#16a34a"/>
+<circle cx="464.3" cy="302.8" r="4" fill="#16a34a"/>
+<circle cx="618.8" cy="288.8" r="4" fill="#16a34a"/>
 </svg>

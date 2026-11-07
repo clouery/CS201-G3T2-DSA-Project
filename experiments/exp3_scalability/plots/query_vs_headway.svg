@@ -9,14 +9,16 @@
 <text x="267.0" y="48" font-size="12" fill="#374151">td_dijkstra</text>
 <line x1="78" x2="696" y1="358.0" y2="358.0" stroke="#e5e7eb"/>
 <text x="70" y="362.0" text-anchor="end" font-size="11" fill="#6b7280">0</text>
-<line x1="78" x2="696" y1="286.0" y2="286.0" stroke="#e5e7eb"/>
-<text x="70" y="290.0" text-anchor="end" font-size="11" fill="#6b7280">50</text>
-<line x1="78" x2="696" y1="214.0" y2="214.0" stroke="#e5e7eb"/>
-<text x="70" y="218.0" text-anchor="end" font-size="11" fill="#6b7280">100</text>
-<line x1="78" x2="696" y1="142.0" y2="142.0" stroke="#e5e7eb"/>
-<text x="70" y="146.0" text-anchor="end" font-size="11" fill="#6b7280">150</text>
+<line x1="78" x2="696" y1="300.4" y2="300.4" stroke="#e5e7eb"/>
+<text x="70" y="304.4" text-anchor="end" font-size="11" fill="#6b7280">50</text>
+<line x1="78" x2="696" y1="242.8" y2="242.8" stroke="#e5e7eb"/>
+<text x="70" y="246.8" text-anchor="end" font-size="11" fill="#6b7280">100</text>
+<line x1="78" x2="696" y1="185.2" y2="185.2" stroke="#e5e7eb"/>
+<text x="70" y="189.2" text-anchor="end" font-size="11" fill="#6b7280">150</text>
+<line x1="78" x2="696" y1="127.6" y2="127.6" stroke="#e5e7eb"/>
+<text x="70" y="131.6" text-anchor="end" font-size="11" fill="#6b7280">200</text>
 <line x1="78" x2="696" y1="70.0" y2="70.0" stroke="#e5e7eb"/>
-<text x="70" y="74.0" text-anchor="end" font-size="11" fill="#6b7280">200</text>
+<text x="70" y="74.0" text-anchor="end" font-size="11" fill="#6b7280">250</text>
 <line x1="78" x2="78" y1="70" y2="358" stroke="#9ca3af"/>
 <line x1="78" x2="696" y1="358" y2="358" stroke="#9ca3af"/>
 <text x="155.3" y="376" text-anchor="middle" font-size="12" fill="#374151">15</text>
@@ -25,19 +27,19 @@
 <text x="618.8" y="376" text-anchor="middle" font-size="12" fill="#374151">120</text>
 <text x="387" y="404" text-anchor="middle" font-size="13" fill="#111827">Bus headway (min); train = 2x</text>
 <text transform="translate(18,214) rotate(-90)" text-anchor="middle" font-size="13" fill="#111827">Mean time per query (µs)</text>
-<path d="M155.3,79.1 L309.8,220.4 L464.3,282.4 L618.8,322.6" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-<circle cx="155.3" cy="79.1" r="4" fill="#2563eb"/>
-<circle cx="309.8" cy="220.4" r="4" fill="#2563eb"/>
-<circle cx="464.3" cy="282.4" r="4" fill="#2563eb"/>
-<circle cx="618.8" cy="322.6" r="4" fill="#2563eb"/>
-<path d="M155.3,344.8 L309.8,351.4 L464.3,354.2 L618.8,356.2" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<circle cx="155.3" cy="344.8" r="4" fill="#dc2626"/>
-<circle cx="309.8" cy="351.4" r="4" fill="#dc2626"/>
-<circle cx="464.3" cy="354.2" r="4" fill="#dc2626"/>
-<circle cx="618.8" cy="356.2" r="4" fill="#dc2626"/>
-<path d="M155.3,282.7 L309.8,308.2 L464.3,321.9 L618.8,331.0" fill="none" stroke="#16a34a" stroke-width="2.5"/>
-<circle cx="155.3" cy="282.7" r="4" fill="#16a34a"/>
-<circle cx="309.8" cy="308.2" r="4" fill="#16a34a"/>
-<circle cx="464.3" cy="321.9" r="4" fill="#16a34a"/>
-<circle cx="618.8" cy="331.0" r="4" fill="#16a34a"/>
+<path d="M155.3,103.7 L309.8,236.9 L464.3,298.4 L618.8,325.1" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="155.3" cy="103.7" r="4" fill="#2563eb"/>
+<circle cx="309.8" cy="236.9" r="4" fill="#2563eb"/>
+<circle cx="464.3" cy="298.4" r="4" fill="#2563eb"/>
+<circle cx="618.8" cy="325.1" r="4" fill="#2563eb"/>
+<path d="M155.3,344.3 L309.8,352.3 L464.3,355.0 L618.8,356.3" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="155.3" cy="344.3" r="4" fill="#dc2626"/>
+<circle cx="309.8" cy="352.3" r="4" fill="#dc2626"/>
+<circle cx="464.3" cy="355.0" r="4" fill="#dc2626"/>
+<circle cx="618.8" cy="356.3" r="4" fill="#dc2626"/>
+<path d="M155.3,291.8 L309.8,313.8 L464.3,327.4 L618.8,332.3" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="155.3" cy="291.8" r="4" fill="#16a34a"/>
+<circle cx="309.8" cy="313.8" r="4" fill="#16a34a"/>
+<circle cx="464.3" cy="327.4" r="4" fill="#16a34a"/>
+<circle cx="618.8" cy="332.3" r="4" fill="#16a34a"/>
 </svg>

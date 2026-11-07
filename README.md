@@ -132,6 +132,19 @@ Each experiment reads its own `experiments/<id>/config.properties` and writes `r
 
 Experiments **do not read** `data/gtfs`; they regenerate instances from `data/processed/cities_all.csv` and `config.properties`, overriding the seed, headways, and buffer per experiment config.
 
+## Results snapshot
+
+From the latest full run. Wall-clock timings vary between runs and machines; routing outcomes and tour durations are deterministic for the given config and seeds. Full tables and plots are in each experiment's `README.md`.
+
+| Experiment | Main finding |
+|---|---|
+| `exp1_heuristics` | Min-wait and min-ride are not substitutes for min-arrival: at a 30-minute headway they reach the optimal arrival on 59.8% and 82.6% of legs, with mean gaps of 134.7 and 21.9 minutes. |
+| `exp2_representations` | At 40 cities, CSA is roughly 21x faster per query than time-expanded Dijkstra (~4.9 µs vs ~105 µs) and uses less than half the memory (1.9 MB vs 4.3 MB); TD Dijkstra sits between them. All three agree on every query (0 mismatches). |
+| `exp3_scalability` | Going from 10 to 40 cities raises query time ~1.7x (TD), ~3.1x (CSA), and ~3.4x (TE). Lowering the headway from 120 to 15 minutes raises preprocessing and memory by roughly 7–10x and query time by roughly 2.6–8x. |
+| `exp4_classic_baseline` | At 40 cities, the classic static tour takes 113.3 h, TD nearest-neighbour 97.6 h, and TD nearest-neighbour + local search 79.4 h — local search improves the greedy tour by 18.6%. |
+
+**Greedy-tour caveat.** The tour layer is greedy: it can choose an early-arriving city with poor onward connections. At 40 cities, waiting is still ~20% of elapsed time after local search, and individual legs can wait 3–7 hours at low-frequency stops. This is documented as a limitation, not solved.
+
 ---
 
 ## Project structure
