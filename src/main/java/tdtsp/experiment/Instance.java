@@ -17,7 +17,7 @@ import tdtsp.network.NetworkGenerator;
 import tdtsp.routing.TransitNetwork;
 
 /**
- * One generated instance (plan §6 procedure, steps 1-2): the top-{@code n} cities by
+ * One generated instance: the top-{@code n} cities by
  * population, a network and timetable from {@link NetworkGenerator} with the given
  * seed, headways and buffer, loaded as a multi-day {@link TransitNetwork}.
  */

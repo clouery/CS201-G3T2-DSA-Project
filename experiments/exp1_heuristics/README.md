@@ -67,7 +67,7 @@ startTime=480
 - The generated timetable covers one service day (06:00-22:00). It is repeated for `days` consecutive days so that multi-day tours remain feasible; day `d` is shifted by `d * 1440` minutes.
 - Runtimes are wall-clock on the machine that ran the experiment and vary between runs; all other values are deterministic for a given config.
 - `gap` = heuristic arrival minus earliest arrival for the same query, over queries where min-arrival is feasible. `failed` counts queries where the heuristic found no journey.
-- Min-wait and min-ride are label-setting heuristics on (stop, trip) states ordered by waiting or riding time (plan §5.5); they are not exact optimisers of their own cost.
+- Min-wait and min-ride are label-setting heuristics on (stop, trip) states ordered by waiting or riding time; they are not exact optimisers of their own cost.
 - min_arrival legs use CSA; its waiting/riding columns describe the earliest-arrival journey.
 
 ### Seed substitutions

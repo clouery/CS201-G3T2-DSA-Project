@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Connection Scan Algorithm for earliest arrival (plan §5.4, §5.7).
+ * Connection Scan Algorithm for earliest arrival.
  *
- * <p>Unlike the plan's pseudocode, it also records which trips have been boarded
+ * <p>It also records which trips have been boarded
  * (Dibbelt et al., 2018): a connection on a boarded trip is taken without the
  * transfer buffer, so riding through a stop is not treated as a transfer.
  *

@@ -63,5 +63,5 @@ MST repair added 1 edge(s) to make the graph connected.
 - The network is synthetic: GeoNames supplies nodes only, so lines, modes, speeds and headways are fabricated and documented here.
 - One node per city; Klang Valley and Johor Bahru suburbs are distinct stops a few kilometres apart.
 - The k-NN/MST graph may add long cross-sea edges to connect Borneo to the peninsula; rail across the South China Sea is a geometric abstraction, not a real route.
-- 160 trips arrive after 24:00; times are integer minutes from 00:00 and may exceed 1440, as allowed by the plan.
+- 160 trips arrive after 24:00; times are integer minutes from 00:00 and may exceed 1440.
 - Transfers are same-stop only with a fixed 5-minute buffer; there are no walking links.

@@ -7,7 +7,7 @@ import tdtsp.routing.Leg;
 import tdtsp.routing.Router;
 
 /**
- * Simulates a tour leg by leg on the timetable (plan §5.6).
+ * Simulates a tour leg by leg on the timetable.
  *
  * <p>An infeasible leg is counted and penalised, and the traveller continues from
  * the next city at the same time, so one bad leg does not hide the rest of the tour.

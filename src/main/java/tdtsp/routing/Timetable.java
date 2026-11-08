@@ -1,6 +1,6 @@
 package tdtsp.routing;
 
-/** Timetable helpers shared by the routers (plan §5.1). */
+/** Timetable helpers shared by the routers. */
 public final class Timetable {
 
     /** Returned by {@link #nextDeparture} when no departure is late enough. */

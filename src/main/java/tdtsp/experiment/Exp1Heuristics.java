@@ -18,7 +18,7 @@ import tdtsp.tour.TourEvaluator;
 import tdtsp.tour.TourResult;
 
 /**
- * RQ1 - Heuristic gap (plan §6): how much later do min-wait and min-ride arrive than
+ * RQ1 - Heuristic gap: how much later do min-wait and min-ride arrive than
  * min-arrival, and when do they fail? Varies the headway at the main configuration.
  */
 final class Exp1Heuristics {
@@ -144,7 +144,7 @@ final class Exp1Heuristics {
                 - `gap` = heuristic arrival minus earliest arrival for the same query, over queries where \
                 min-arrival is feasible. `failed` counts queries where the heuristic found no journey.
                 - Min-wait and min-ride are label-setting heuristics on (stop, trip) states ordered by \
-                waiting or riding time (plan §5.5); they are not exact optimisers of their own cost.
+                waiting or riding time; they are not exact optimisers of their own cost.
                 - min_arrival legs use CSA; its waiting/riding columns describe the earliest-arrival journey.
                 """);
     }

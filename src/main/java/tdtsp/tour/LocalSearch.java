@@ -7,7 +7,7 @@ import java.util.List;
 import tdtsp.routing.Router;
 
 /**
- * 2-opt and insertion (relocate) for the open-path tour, with full re-evaluation (plan §5.6).
+ * 2-opt and insertion (relocate) for the open-path tour, with full re-evaluation.
  *
  * <p>Costs are time-dependent and asymmetric, so the classic 2-opt delta is invalid:
  * every candidate tour is re-simulated with {@link TourEvaluator}. Wrap the router

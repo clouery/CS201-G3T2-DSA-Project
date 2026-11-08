@@ -13,7 +13,7 @@ import tdtsp.routing.TimeDependentDijkstra;
 import tdtsp.routing.TimeExpandedGraph;
 import tdtsp.routing.TransitNetwork;
 
-/** Builds the three earliest-arrival routers with timing and size measurements (plan §6 metrics). */
+/** Builds the three earliest-arrival routers with timing and size measurements. */
 final class Approaches {
 
     static final String TD_DIJKSTRA = "td_dijkstra";

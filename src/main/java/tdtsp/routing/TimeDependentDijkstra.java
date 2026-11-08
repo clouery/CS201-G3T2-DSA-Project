@@ -7,23 +7,23 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
- * Time-dependent Dijkstra (plan §5.5, §5.7).
+ * Time-dependent Dijkstra.
  *
- * <p>Unlike the plan's pseudocode, labels are (stop, trip) states rather than stops:
+ * <p>Labels are (stop, trip) states rather than stops:
  * staying on the same trip through a stop costs no transfer buffer, while changing
  * trips does. A per-stop label cannot tell these apart and would force a transfer at
  * every intermediate stop.
  *
  * <p>With {@link Objective#ARRIVAL} the result is the exact earliest arrival. With
  * {@link Objective#WAIT} or {@link Objective#RIDE} labels are ordered by waiting or
- * riding time instead; those are the plan's secondary leg heuristics, not exact
+ * riding time instead; those are secondary leg heuristics, not exact
  * optimisers of their own cost.
  *
  * <p>Time: O((E + C) log C). Space: O(V + E + C).
  */
 public class TimeDependentDijkstra implements Router {
 
-    /** What the search minimises (plan §2). */
+    /** What the search minimises. */
     public enum Objective { ARRIVAL, WAIT, RIDE }
 
     private static final int NO_TRIP = -1;

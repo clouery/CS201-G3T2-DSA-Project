@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Approach A: time-expanded event graph + Dijkstra (plan §5.3).
+ * Approach A: time-expanded event graph + Dijkstra.
  *
  * <p>Every connection {@code i} gets three event nodes:
  * <ul>

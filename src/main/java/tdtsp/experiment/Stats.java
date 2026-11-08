@@ -2,7 +2,7 @@ package tdtsp.experiment;
 
 import java.util.Arrays;
 
-/** Descriptive statistics over seeds (plan §6: mean, median, standard deviation). */
+/** Descriptive statistics over seeds. */
 final class Stats {
 
     private Stats() {

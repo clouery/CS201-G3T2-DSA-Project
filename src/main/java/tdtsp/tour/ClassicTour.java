@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Classic static TSP baseline (plan §5.2): nearest-neighbour + 2-opt on a complete,
+ * Classic static TSP baseline: nearest-neighbour + 2-opt on a complete,
  * symmetric distance matrix, ignoring the timetable.
  *
  * <p>Costs here are static and symmetric, so the standard O(1) 2-opt delta is valid.

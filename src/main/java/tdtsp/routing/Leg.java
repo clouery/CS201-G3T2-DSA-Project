@@ -1,7 +1,7 @@
 package tdtsp.routing;
 
 /**
- * One routed leg between consecutive tour cities (plan §1.3, §2).
+ * One routed leg between consecutive tour cities.
  *
  * <p>{@code arrival - depart = waiting + ride}. Waiting includes the wait at the
  * origin and every transfer buffer.

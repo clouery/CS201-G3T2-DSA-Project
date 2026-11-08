@@ -16,7 +16,7 @@ import tdtsp.tour.TourEvaluator;
 import tdtsp.tour.TourResult;
 
 /**
- * RQ4 - Value of the redesign (plan §6): how does the classic static TSP tour perform
+ * RQ4 - Value of the redesign: how does the classic static TSP tour perform
  * on the real timetable compared with the time-dependent tours?
  */
 final class Exp4ClassicBaseline {
@@ -110,7 +110,7 @@ final class Exp4ClassicBaseline {
                 evaluated leg by leg with earliest-arrival routing (CSA); `td_nn` = time-dependent nearest \
                 neighbour; `td_nn_ls` = `td_nn` followed by 2-opt and insertion with full re-evaluation.
                 - All tours start at the start city at the start time; the duration is the final arrival \
-                minus the start time. Infeasible legs are counted and skipped (plan §5.6).
+                minus the start time. Infeasible legs are counted and skipped.
                 - `build_ms` is the time to construct the tour (for `classic_static`, without the timetable \
                 evaluation).
                 """);

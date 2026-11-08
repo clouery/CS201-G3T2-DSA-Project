@@ -63,17 +63,17 @@ java -cp target/classes tdtsp.Main
 
 The CLI loads `data/gtfs` and `config.properties`. It uses **stop IDs**, not city names.
 
-| Command | Meaning |
-|---|---|
-| `help` | Show commands |
-| `list stops -p <page>` | List stops alphabetically |
-| `list stops -trip <trip_id>` | Stops visited by a trip |
-| `list trips -p <page>` | List scheduled trips |
-| `list routes -p <page>` | List routes |
-| `tdd <origin_id> <dest_id> HH:mm` | Time-dependent Dijkstra |
+| Command                             | Meaning                   |
+| ----------------------------------- | ------------------------- |
+| `help`                            | Show commands             |
+| `list stops -p <page>`            | List stops alphabetically |
+| `list stops -trip <trip_id>`      | Stops visited by a trip   |
+| `list trips -p <page>`            | List scheduled trips      |
+| `list routes -p <page>`           | List routes               |
+| `tdd <origin_id> <dest_id> HH:mm` | Time-dependent Dijkstra   |
 | `csa <origin_id> <dest_id> HH:mm` | Connection Scan Algorithm |
-| `ted <origin_id> <dest_id> HH:mm` | Time-expanded Dijkstra |
-| `exit` | Quit |
+| `ted <origin_id> <dest_id> HH:mm` | Time-expanded Dijkstra    |
+| `exit`                            | Quit                      |
 
 Example session:
 
@@ -123,12 +123,12 @@ java -cp target/classes tdtsp.experiment.ExperimentMain exp2_representations
 
 Each experiment reads its own `experiments/<id>/config.properties` and writes `results.csv`, `summary.csv`, `plots/`, and a generated `README.md`. Edit the config, not the generated README.
 
-| Experiment | Research question |
-|---|---|
-| `exp1_heuristics` | RQ1 — how much later do min-wait and min-ride arrive than min-arrival? |
-| `exp2_representations` | RQ2 — time-expanded + Dijkstra vs CSA vs TD Dijkstra in time and memory |
-| `exp3_scalability` | RQ3 — scaling with city count, headway, and transfer buffer |
-| `exp4_classic_baseline` | RQ4 — classic static TSP vs time-dependent tours |
+| Experiment                | Research question                                                        |
+| ------------------------- | ------------------------------------------------------------------------ |
+| `exp1_heuristics`       | RQ1 — how much later do min-wait and min-ride arrive than min-arrival?  |
+| `exp2_representations`  | RQ2 — time-expanded + Dijkstra vs CSA vs TD Dijkstra in time and memory |
+| `exp3_scalability`      | RQ3 — scaling with city count, headway, and transfer buffer             |
+| `exp4_classic_baseline` | RQ4 — classic static TSP vs time-dependent tours                        |
 
 Experiments **do not read** `data/gtfs`; they regenerate instances from `data/processed/cities_all.csv` and `config.properties`, overriding the seed, headways, and buffer per experiment config.
 
@@ -136,12 +136,12 @@ Experiments **do not read** `data/gtfs`; they regenerate instances from `data/pr
 
 From the latest full run. Wall-clock timings vary between runs and machines; routing outcomes and tour durations are deterministic for the given config and seeds. Full tables and plots are in each experiment's `README.md`.
 
-| Experiment | Main finding |
-|---|---|
-| `exp1_heuristics` | Min-wait and min-ride are not substitutes for min-arrival: at a 30-minute headway they reach the optimal arrival on 59.8% and 82.6% of legs, with mean gaps of 134.7 and 21.9 minutes. |
-| `exp2_representations` | At 40 cities, CSA is roughly 21x faster per query than time-expanded Dijkstra (~4.9 µs vs ~105 µs) and uses less than half the memory (1.9 MB vs 4.3 MB); TD Dijkstra sits between them. All three agree on every query (0 mismatches). |
-| `exp3_scalability` | Going from 10 to 40 cities raises query time ~1.7x (TD), ~3.1x (CSA), and ~3.4x (TE). Lowering the headway from 120 to 15 minutes raises preprocessing and memory by roughly 7–10x and query time by roughly 2.6–8x. |
-| `exp4_classic_baseline` | At 40 cities, the classic static tour takes 113.3 h, TD nearest-neighbour 97.6 h, and TD nearest-neighbour + local search 79.4 h — local search improves the greedy tour by 18.6%. |
+| Experiment                | Main finding                                                                                                                                                                                                                              |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exp1_heuristics`       | Min-wait and min-ride are not substitutes for min-arrival: at a 30-minute headway they reach the optimal arrival on 59.8% and 82.6% of legs, with mean gaps of 134.7 and 21.9 minutes.                                                    |
+| `exp2_representations`  | At 40 cities, CSA is roughly 21x faster per query than time-expanded Dijkstra (~4.9 µs vs ~105 µs) and uses less than half the memory (1.9 MB vs 4.3 MB); TD Dijkstra sits between them. All three agree on every query (0 mismatches). |
+| `exp3_scalability`      | Going from 10 to 40 cities raises query time ~1.7x (TD), ~3.1x (CSA), and ~3.4x (TE). Lowering the headway from 120 to 15 minutes raises preprocessing and memory by roughly 7–10x and query time by roughly 2.6–8x.                    |
+| `exp4_classic_baseline` | At 40 cities, the classic static tour takes 113.3 h, TD nearest-neighbour 97.6 h, and TD nearest-neighbour + local search 79.4 h — local search improves the greedy tour by 18.6%.                                                       |
 
 **Greedy-tour caveat.** The tour layer is greedy: it can choose an early-arriving city with poor onward connections. At 40 cities, waiting is still ~20% of elapsed time after local search, and individual legs can wait 3–7 hours at low-frequency stops. This is documented as a limitation, not solved.
 
@@ -189,7 +189,7 @@ From the latest full run. Wall-clock timings vary between runs and machines; rou
 
 **Cleaning:** drop coordinate outliers, deduplicate name + coordinate points, validate against a Malaysia bounding box, keep population-bearing populated places (`P/PPL`, `P/PPLA`, `P/PPLC`).
 
-**Main instance:** the 40 largest places. They contain 19.12M of the 36.90M cleaned urban-place total (51.8%) and cover 13 state-level units, including Sabah, Sarawak, Penang, and the Klang Valley. See plan §4.3 for the subset justification.
+**Main instance:** the 40 largest places. They contain 19.12M of the 36.90M cleaned urban-place total (51.8%) and cover 13 state-level units, including Sabah, Sarawak, Penang, and the Klang Valley.
 
 **Synthetic network:** k-nearest-neighbour graph (`k = 3`) plus MST connectivity; 10 target lines (up to 12 with coverage repair), 4–8 stops each; bus under 200 km per segment, train otherwise; bus 60 km/h, train 100 km/h; bus headway 30 min, train 60 min; service 06:00–22:00; 5-minute transfer buffer; one node per city; same-stop transfers only.
 
@@ -197,17 +197,17 @@ From the latest full run. Wall-clock timings vary between runs and machines; rou
 
 ### `config.properties`
 
-| Key | Value | Meaning |
-|---|---|---|
-| `seed` | `43` | Network-generation seed (main instance) |
-| `knn.k` | `3` | Nearest neighbours per city |
-| `line.count` | `10` | Target number of lines (12 maximum with repair) |
-| `line.minStops` / `line.maxStops` | `4` / `8` | Stops per line |
-| `mode.thresholdKm` | `200` | Bus below, train at/above |
-| `speed.busKmh` / `speed.trainKmh` | `60` / `100` | Segment speeds |
-| `headway.busMin` / `headway.trainMin` | `30` / `60` | Departure headways |
-| `service.firstMin` / `service.lastMin` | `360` / `1320` | 06:00–22:00 |
-| `transfer.bufferMin` | `5` | Same-stop transfer buffer |
+| Key                                        | Value              | Meaning                                         |
+| ------------------------------------------ | ------------------ | ----------------------------------------------- |
+| `seed`                                   | `43`             | Network-generation seed (main instance)         |
+| `knn.k`                                  | `3`              | Nearest neighbours per city                     |
+| `line.count`                             | `10`             | Target number of lines (12 maximum with repair) |
+| `line.minStops` / `line.maxStops`      | `4` / `8`      | Stops per line                                  |
+| `mode.thresholdKm`                       | `200`            | Bus below, train at/above                       |
+| `speed.busKmh` / `speed.trainKmh`      | `60` / `100`   | Segment speeds                                  |
+| `headway.busMin` / `headway.trainMin`  | `30` / `60`    | Departure headways                              |
+| `service.firstMin` / `service.lastMin` | `360` / `1320` | 06:00–22:00                                    |
+| `transfer.bufferMin`                     | `5`              | Same-stop transfer buffer                       |
 
 The seed controls the random line-generation walks (line starts, next stops, line lengths, coverage repair). It does not affect headways, speeds, or service hours. Seed 42 produces a disconnected service network at 40 cities; 43 is the first valid seed. The experiment folders use their own `seeds=1,2,3,4,5`.
 
@@ -215,13 +215,13 @@ The seed controls the random line-generation walks (line starts, next stops, lin
 
 ## Algorithms
 
-| Component | Approach |
-|---|---|
+| Component                         | Approach                                                                                                              |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | **Time-dependent Dijkstra** | Sorted departure arrays per directed edge + binary search; priority queue; objectives `ARRIVAL`, `WAIT`, `RIDE` |
-| **CSA** | Connection list sorted by departure; one chronological scan |
-| **Time-expanded Dijkstra** | Event nodes for `(trip, stop)` arrivals/departures; travel, wait, and transfer arcs |
-| **Tour layer** | Nearest-neighbour, then insertion/2-opt with full re-evaluation of affected legs |
-| **Classic baseline** | Complete haversine graph, NN + 2-opt, then evaluated on the real timetable |
+| **CSA**                     | Connection list sorted by departure; one chronological scan                                                           |
+| **Time-expanded Dijkstra**  | Event nodes for `(trip, stop)` arrivals/departures; travel, wait, and transfer arcs                                 |
+| **Tour layer**              | Nearest-neighbour, then insertion/2-opt with full re-evaluation of affected legs                                      |
+| **Classic baseline**        | Complete haversine graph, NN + 2-opt, then evaluated on the real timetable                                            |
 
 Time-dependent, asymmetric costs make the standard 2-opt delta invalid, so the tour layer re-evaluates legs instead of using a static delta. Infeasible legs are penalized and reported, not treated as crashes.
 

@@ -16,7 +16,7 @@ import tdtsp.tour.TourEvaluator;
 import tdtsp.tour.TourResult;
 
 /**
- * RQ3 - Scalability (plan §6): how do the approaches scale with city count, headway
+ * RQ3 - Scalability: how do the approaches scale with city count, headway
  * and transfer buffer? One factor is varied at a time around the main configuration.
  */
 final class Exp3Scalability {

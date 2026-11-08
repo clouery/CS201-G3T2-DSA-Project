@@ -65,7 +65,7 @@ startTime=480
 - The generated timetable covers one service day (06:00-22:00). It is repeated for `days` consecutive days so that multi-day tours remain feasible; day `d` is shifted by `d * 1440` minutes.
 - Runtimes are wall-clock on the machine that ran the experiment and vary between runs; all other values are deterministic for a given config.
 - Methods: `classic_static` = static NN + 2-opt on the complete haversine graph, then evaluated leg by leg with earliest-arrival routing (CSA); `td_nn` = time-dependent nearest neighbour; `td_nn_ls` = `td_nn` followed by 2-opt and insertion with full re-evaluation.
-- All tours start at the start city at the start time; the duration is the final arrival minus the start time. Infeasible legs are counted and skipped (plan §5.6).
+- All tours start at the start city at the start time; the duration is the final arrival minus the start time. Infeasible legs are counted and skipped.
 - `build_ms` is the time to construct the tour (for `classic_static`, without the timetable evaluation).
 
 ### Seed substitutions

@@ -5,7 +5,7 @@ import java.util.List;
 import tdtsp.routing.Leg;
 
 /**
- * A tour simulated on the timetable (plan §5.6).
+ * A tour simulated on the timetable.
  *
  * @param tour           city order, starting with the start city
  * @param legs           routed legs, one per consecutive pair
