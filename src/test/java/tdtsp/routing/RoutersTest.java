@@ -34,9 +34,12 @@ class RoutersTest {
 
     private static List<Router> routers(TransitNetwork net, int buffer) {
         return List.of(
-                new TimeDependentDijkstra(net.buildAdjacency(), buffer),
-                new ConnectionScan(net.connections(), net.numStops(), buffer),
-                new TimeExpandedGraph(net.connections(), net.numStops(), buffer));
+            new TimeDependentDijkstra(net.buildAdjacency(), buffer),
+            new ConnectionScan(net.connections(), net.numStops(), buffer),
+            new TimeExpandedDijkstra(
+                new TimeExpandedGraph(net.connections(), net.numStops(), buffer)
+            )
+        );
     }
 
     @Test
@@ -107,7 +110,7 @@ class RoutersTest {
         List<Router> all = routers(net, BUFFER);
         TimeDependentDijkstra dijkstra = (TimeDependentDijkstra) all.get(0);
         ConnectionScan csa = (ConnectionScan) all.get(1);
-        TimeExpandedGraph te = (TimeExpandedGraph) all.get(2);
+        TimeExpandedDijkstra te = (TimeExpandedDijkstra) all.get(2);
 
         Random random = new Random(7);
         for (int q = 0; q < 40; q++) {

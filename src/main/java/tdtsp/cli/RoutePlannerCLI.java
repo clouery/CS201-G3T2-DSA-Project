@@ -15,6 +15,7 @@ import tdtsp.routing.ConnectionScan;
 import tdtsp.routing.Leg;
 import tdtsp.routing.Router;
 import tdtsp.routing.TimeDependentDijkstra;
+import tdtsp.routing.TimeExpandedDijkstra;
 import tdtsp.routing.TimeExpandedGraph;
 import tdtsp.routing.TransitNetwork;
 
@@ -30,20 +31,25 @@ public class RoutePlannerCLI {
     private final List<TripInfo> trips = new ArrayList<>();
     private final Map<String, List<StopTime>> stopTimes = new HashMap<>();
 
-    public RoutePlannerCLI(TransitNetwork network, Path gtfsDir, int buffer)
+    public RoutePlannerCLI(TransitNetwork network, Path gtfsDir, int transferTimeBuffer)
             throws IOException {
 
         this.network = network;
 
         // Build the three routers once.
         routers.put("tdd",
-                new TimeDependentDijkstra(network.buildAdjacency(), buffer));
+                new TimeDependentDijkstra(network.buildAdjacency(), transferTimeBuffer));
 
         routers.put("csa",
-                new ConnectionScan(network.connections(), network.numStops(), buffer));
+                new ConnectionScan(network.connections(), network.numStops(), transferTimeBuffer));
 
-        routers.put("ted",
-                new TimeExpandedGraph(network.connections(), network.numStops(), buffer));
+        TimeExpandedGraph graph = new TimeExpandedGraph(
+            network.connections(),
+            network.numStops(),
+            transferTimeBuffer
+        );
+
+        routers.put("ted", new TimeExpandedDijkstra(graph));
 
         loadData(gtfsDir);
     }
