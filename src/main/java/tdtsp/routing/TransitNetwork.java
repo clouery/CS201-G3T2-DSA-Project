@@ -11,9 +11,9 @@ import java.util.Map;
 import tdtsp.network.Csv;
 
 /**
- * Timetable loaded from the GTFS-like CSVs in {@code data/gtfs/} (plan §4.6).
+ * Timetable loaded from the GTFS-like CSVs in {@code data/gtfs/}.
  *
- * <p>The generated timetable covers one service day. A tour of 30 cities takes
+ * <p>The generated timetable covers one service day. A tour of 40 cities takes
  * several days, so the day is repeated {@code days} times: day {@code d} is the
  * same timetable shifted by {@code d * 1440} minutes, with its own trip ids.
  */
@@ -136,7 +136,7 @@ public final class TransitNetwork {
 
     /**
      * Builds the time-dependent adjacency list: one {@link Edge} per line segment and
-     * direction, holding that segment's sorted departures (plan §5.1).
+     * direction, holding that segment's sorted departures.
      */
     public List<List<Edge>> buildAdjacency() {
         // "pattern|from|to" -> {departure, trip, ride} rows

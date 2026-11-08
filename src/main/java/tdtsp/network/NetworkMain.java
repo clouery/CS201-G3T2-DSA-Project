@@ -7,7 +7,7 @@ import java.nio.file.Path;
  *
  * <pre>
  * java -cp target/classes tdtsp.network.NetworkMain \
- *   data/processed/cities_top30.csv config.properties data/processed data/gtfs
+ *   data/processed/cities_top40.csv config.properties data/processed data/gtfs
  * </pre>
  */
 public final class NetworkMain {
@@ -20,7 +20,7 @@ public final class NetworkMain {
             System.err.println("usage: NetworkMain [cities.csv] [config.properties] [processedDir] [gtfsDir]");
             System.exit(2);
         }
-        Path cities = Path.of(args.length > 0 ? args[0] : "data/processed/cities_top30.csv");
+        Path cities = Path.of(args.length > 0 ? args[0] : "data/processed/cities_top40.csv");
         Path config = Path.of(args.length > 1 ? args[1] : "config.properties");
         Path processed = Path.of(args.length > 2 ? args[2] : "data/processed");
         Path gtfs = Path.of(args.length > 3 ? args[3] : "data/gtfs");

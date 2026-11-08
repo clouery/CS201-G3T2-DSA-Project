@@ -22,7 +22,7 @@ import java.util.Random;
 /**
  * Builds the synthetic transit network and timetable from cleaned city nodes.
  *
- * <p>Pipeline (docs/transit-tsp-plan.md §4.4-4.6):
+ * <p>Pipeline:
  * geometric k-NN graph + MST, seeded line generation with coverage repair,
  * mode assignment, headway-based trips, and GTFS-like CSV output.
  */
@@ -840,7 +840,7 @@ public final class NetworkGenerator {
                 + "rail across the South China Sea is a geometric abstraction, not a real route.\n");
         report.append("- ").append(overnightTrips)
                 .append(" trips arrive after 24:00; times are integer minutes from 00:00 and may "
-                        + "exceed 1440, as allowed by the plan.\n");
+                        + "exceed 1440.\n");
         report.append("- Transfers are same-stop only with a fixed ").append(transferBufferMin)
                 .append("-minute buffer; there are no walking links.\n");
 

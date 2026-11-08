@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * RQ2 - Representation trade-off (plan §6): time-expanded + Dijkstra (A) vs
+ * RQ2 - Representation trade-off: time-expanded + Dijkstra (A) vs
  * time-dependent + CSA (B) in query time, preprocessing time and memory.
- * Time-dependent Dijkstra is reported alongside as the plan's fallback approach.
+ * Time-dependent Dijkstra is reported alongside as the fallback approach.
  */
 final class Exp2Representations {
 

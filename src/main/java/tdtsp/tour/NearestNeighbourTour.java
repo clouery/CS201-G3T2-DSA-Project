@@ -8,7 +8,7 @@ import java.util.Set;
 import tdtsp.routing.Router;
 
 /**
- * Time-dependent nearest-neighbour tour (plan §5.6, §5.7).
+ * Time-dependent nearest-neighbour tour.
  *
  * <p>Time: O(n² × router cost).
  */

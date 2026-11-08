@@ -30,6 +30,80 @@ public class TimeExpandedDijkstra implements Router {
     }
 
 
+    public int[] earliestArrival(int originStopId, int departureTime) {
+        int numNodes = graph.numNodes();
+
+        int[] dist = new int[numNodes];
+        Arrays.fill(dist, Router.INF);
+
+        PriorityQueue<QueueEntry> pq = new PriorityQueue<>(
+            (a, b) -> Integer.compare(a.distance(), b.distance())
+        );
+
+        // Initialise all eligible departure events at the origin.
+        // No transfer buffer is needed for the initial boarding.
+        for (int i = 0; i < numNodes; i++) {
+            TimeExpandedGraph.EventNode node = graph.getNode(i);
+
+            if (node.type == TimeExpandedGraph.EventType.DEPARTURE
+                && node.stopId == originStopId
+                && node.time >= departureTime) {
+
+                int waitingTime = node.time - departureTime;
+
+                if (waitingTime < dist[i]) {
+                    dist[i] = waitingTime;
+                    pq.add(new QueueEntry(i, waitingTime));
+                }
+            }
+        }
+
+        // Run Dijkstra until every reachable event has been processed.
+        while (!pq.isEmpty()) {
+            QueueEntry current = pq.poll();
+
+            int currentNodeId = current.nodeId();
+            int currentDistance = current.distance();
+
+            if (currentDistance != dist[currentNodeId]) {
+                continue;
+            }
+
+            for (TimeExpandedGraph.Edge edge : graph.getEdges(currentNodeId)) {
+                int nextNodeId = edge.to();
+                int newDistance = currentDistance + edge.weight();
+
+                if (newDistance < dist[nextNodeId]) {
+                    dist[nextNodeId] = newDistance;
+                    pq.add(new QueueEntry(nextNodeId, newDistance));
+                }
+            }
+        }
+
+        // Convert event-node distances into earliest arrival times per stop.
+        int[] arrivalTimes = new int[graph.numStops()];
+        Arrays.fill(arrivalTimes, Router.INF);
+
+        // Travelling from a stop to itself takes no time.
+        arrivalTimes[originStopId] = departureTime;
+
+        for (int i = 0; i < numNodes; i++) {
+            TimeExpandedGraph.EventNode node = graph.getNode(i);
+
+            if (node.type == TimeExpandedGraph.EventType.ARRIVAL
+                && dist[i] != Router.INF) {
+
+                int arrivalTime = departureTime + dist[i];
+
+                arrivalTimes[node.stopId] = Math.min(
+                    arrivalTimes[node.stopId],
+                    arrivalTime
+                );
+            }
+        }
+
+        return arrivalTimes;
+    }
 
     public Optional<RouteResult> findEarliestArrival(
         int originStopId,

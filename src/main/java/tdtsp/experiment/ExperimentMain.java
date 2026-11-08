@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * Runs the experiments of plan §6 from the repository root.
+ * Runs the experiments from the repository root.
  *
  * <pre>
  * mvn -q compile

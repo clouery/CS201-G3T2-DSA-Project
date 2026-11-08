@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-/** An experiment's {@code config.properties} (plan §6, per-experiment folders). */
+/** An experiment's {@code config.properties}. */
 final class ExperimentConfig {
 
     private final Path path;

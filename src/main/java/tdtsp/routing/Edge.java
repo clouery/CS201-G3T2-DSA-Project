@@ -1,7 +1,7 @@
 package tdtsp.routing;
 
 /**
- * Directed time-dependent edge {@code u -> to} for one line and direction (plan §5.1).
+ * Directed time-dependent edge {@code u -> to} for one line and direction.
  *
  * <p>Build one edge per line segment, so all trips on it share the ride time and
  * an earlier departure always arrives earlier (FIFO).

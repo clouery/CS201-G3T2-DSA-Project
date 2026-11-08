@@ -35,6 +35,10 @@ public class TimeExpandedGraph {
         return nodes.size();
     }
 
+    public int numStops() {
+        return numStops;
+    }
+
     public int numArcs() {
         int count = 0;
 

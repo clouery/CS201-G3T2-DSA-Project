@@ -15,7 +15,7 @@ java -cp target/classes tdtsp.experiment.ExperimentMain exp2_representations
 
 ```properties
 # RQ2 - representation trade-off at the main configuration.
-cities=30
+cities=40
 headway=30
 buffer=5
 queries=200
@@ -40,9 +40,9 @@ startTime=480
 
 | approach | prep_ms_mean | query_us_mean | query_us_std | one_to_all_us_mean | structure_mb_mean | timetable_elements_mean | graph_nodes_mean | graph_arcs_mean | mismatches_mean |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| td_dijkstra | 2.568 | 51.615 | 14.501 | 137.116 | 0.290 | 37055.200 | 30.000 | 99.600 | 0.000 |
-| csa | 5.588 | 12.613 | 8.372 | 82.857 | 1.555 | 37055.200 | 30.000 | 37055.200 | 0.000 |
-| time_expanded | 10.735 | 232.435 | 79.303 | 8367.358 | 3.472 | 37055.200 | 111165.600 | 177010.800 | 0.000 |
+| td_dijkstra | 1.585 | 38.653 | 9.057 | 91.696 | 0.357 | 45707.200 | 40.000 | 116.000 | 0.000 |
+| csa | 2.242 | 4.879 | 0.706 | 63.616 | 1.918 | 45707.200 | 40.000 | 45707.200 | 0.000 |
+| time_expanded | 6.114 | 104.941 | 21.237 | 6273.943 | 4.289 | 45707.200 | 137121.600 | 219147.400 | 0.000 |
 
 ![query time](plots/query_time.svg)
 
@@ -62,4 +62,8 @@ startTime=480
 - `prep_ms`: building the structure from the loaded timetable (TD: adjacency list with sorted departure arrays; CSA: sorting connections; TE: event graph). Median of 3 builds after a warm-up build.
 - `structure_mb` is estimated from array lengths and JVM object sizes of the preprocessed structure, not measured peak heap, which is too noisy under garbage collection.
 - `graph_nodes`/`graph_arcs`: stops/line segments (TD), stops/connections (CSA), events/event arcs (TE). `mismatches`: queries whose arrival differs from CSA (expected 0).
+
+### Seed substitutions
+
+- cities=40, headway=30/60, buffer=5: seed 2 failed in the generator, network seed 1002 used
 

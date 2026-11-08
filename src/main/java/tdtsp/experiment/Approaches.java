@@ -14,7 +14,7 @@ import tdtsp.routing.TimeExpandedDijkstra;
 import tdtsp.routing.TimeExpandedGraph;
 import tdtsp.routing.TransitNetwork;
 
-/** Builds the three earliest-arrival routers with timing and size measurements (plan §6 metrics). */
+/** Builds the three earliest-arrival routers with timing and size measurements. */
 final class Approaches {
 
     static final String TD_DIJKSTRA = "td_dijkstra";
@@ -89,7 +89,7 @@ final class Approaches {
         ToLongFunction<int[]> query = switch (router) {
             case TimeDependentDijkstra td -> q -> td.earliestArrival(q[0], q[2])[q[1]];
             case ConnectionScan csa -> q -> csa.earliestArrival(q[0], q[2])[q[1]];
-            case TimeExpandedDijkstra te -> q -> te.leg(q[0], q[1], q[2]).arrival();
+            case TimeExpandedDijkstra te -> q -> te.earliestArrival(q[0], q[2])[q[1]];
             default -> throw new IllegalArgumentException("no one-to-all query for " + router);
         };
         return meanMicros(queries, query);

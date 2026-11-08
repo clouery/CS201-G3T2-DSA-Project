@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Caches legs by {@code (from, to, departure time)} during tour construction (plan §5.1).
+ * Caches legs by {@code (from, to, departure time)} during tour construction.
  * Local search re-evaluates whole tours, so unchanged prefixes become cache hits.
  */
 public final class MemoRouter implements Router {

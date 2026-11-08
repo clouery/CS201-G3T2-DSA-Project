@@ -1,7 +1,7 @@
 package tdtsp.routing;
 
 /**
- * Earliest-arrival router used by the tour layer (plan §5.6).
+ * Earliest-arrival router used by the tour layer.
  * Times are integer minutes from the service-day start.
  */
 public interface Router {
