@@ -26,7 +26,7 @@ public class Main {
                 config.load(reader);
             }
 
-            int buffer = Integer.parseInt(
+            int transferTimeBuffer = Integer.parseInt(
                     config.getProperty("transfer.bufferMin", "5"));
 
             TransitNetwork network = TransitNetwork.load(gtfsDir, 1);
@@ -35,7 +35,7 @@ public class Main {
             System.out.println("Loaded " + network.numTrips() + " trips.");
 
             RoutePlannerCLI cli =
-                    new RoutePlannerCLI(network, gtfsDir, buffer);
+                    new RoutePlannerCLI(network, gtfsDir, transferTimeBuffer);
 
             cli.run();
 

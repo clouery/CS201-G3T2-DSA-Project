@@ -10,6 +10,7 @@ import tdtsp.routing.ConnectionScan;
 import tdtsp.routing.Edge;
 import tdtsp.routing.Router;
 import tdtsp.routing.TimeDependentDijkstra;
+import tdtsp.routing.TimeExpandedDijkstra;
 import tdtsp.routing.TimeExpandedGraph;
 import tdtsp.routing.TransitNetwork;
 
@@ -50,9 +51,17 @@ final class Approaches {
         built.add(new Built(CSA, csa.value(), csa.ms(), mb(csa.value().structureBytes()),
                 csa.value().size(), net.numStops(), csa.value().size()));
 
-        Timed<TimeExpandedGraph> te = timed(() -> new TimeExpandedGraph(net.connections(), net.numStops(), buffer));
-        built.add(new Built(TIME_EXPANDED, te.value(), te.ms(), mb(te.value().structureBytes()),
-                csa.value().size(), te.value().numNodes(), te.value().numArcs()));
+        Timed<TimeExpandedDijkstra> te = timed(() -> {
+            TimeExpandedGraph graph = new TimeExpandedGraph(
+                net.connections(),
+                net.numStops(),
+                buffer
+            );
+
+            return new TimeExpandedDijkstra(graph);
+        });
+        built.add(new Built(TIME_EXPANDED, te.value(), te.ms(), mb(te.value().getGraph().structureBytes()),
+                csa.value().size(), te.value().getGraph().numNodes(), te.value().getGraph().numArcs()));
         return built;
     }
 
@@ -80,7 +89,7 @@ final class Approaches {
         ToLongFunction<int[]> query = switch (router) {
             case TimeDependentDijkstra td -> q -> td.earliestArrival(q[0], q[2])[q[1]];
             case ConnectionScan csa -> q -> csa.earliestArrival(q[0], q[2])[q[1]];
-            case TimeExpandedGraph te -> q -> te.earliestArrival(q[0], q[2])[q[1]];
+            case TimeExpandedDijkstra te -> q -> te.leg(q[0], q[1], q[2]).arrival();
             default -> throw new IllegalArgumentException("no one-to-all query for " + router);
         };
         return meanMicros(queries, query);
