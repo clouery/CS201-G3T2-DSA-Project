@@ -9,8 +9,6 @@ The project compares two schedule-aware routing representations:
 
 with time-dependent Dijkstra as a third reference, a nearest-neighbour + local-search tour layer, and a classic static TSP baseline.
 
-Full design and rationale: [`docs/transit-tsp-plan.md`](docs/transit-tsp-plan.md).
-
 ---
 
 ## Requirements
@@ -161,7 +159,6 @@ From the latest full run. Wall-clock timings vary between runs and machines; rou
 │   ├── processed/                 # cleaned cities, distances, edges, lines, report
 │   └── gtfs/                      # GTFS-like stops/routes/trips/stop_times/transfers
 ├── docs/
-│   ├── transit-tsp-plan.md        # full design, experiments, and rationale
 │   └── network_map.svg
 ├── experiments/
 │   ├── exp1_heuristics/
